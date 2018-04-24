@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="chroneru" />
+  <title>newbie_workshop</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="newbie_workshop_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="newbie_workshop_files/reveal.js-3.3.0.1/css/theme/sky.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="newbie_workshop.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">newbie_workshop</h1>
+    <h2 class="author">chroneru</h2>
+    <h3 class="date">2018/4/24</h3>
+</section>
+
+<section><section class="titleslide slide level1"><h1>自己紹介</h1></section><section class="slide level2">
+
+<div id="myprof">
+<ul>
+<li><span class="citation" data-cites="chroneru_mineru">@chroneru_mineru</span></li>
+<li>R歴はぎゅっとすると2年ぐらい</li>
+<li>Rについてのブログを書いてる</li>
+</ul>
+</div>
+</section></section>
+<section><section id="r" class="titleslide slide level1"><h1>1.Rのインストール</h1></section><section id="windows" class="slide level2">
+<h2>1.1.windows</h2>
+<ul>
+<li><a href="https://www.r-project.org/">Rのページ</a>に行きます。</li>
+<li>Mirrors からjapanのミラーサイトを選択してください。</li>
+<li>Download R x.x.x for Windowsをクリックしてダウンロードして実行する。(x.x.xはバージョンです。)</li>
+<li>後はインストーラにしたがってください。</li>
+</ul>
+</section><section id="mac" class="slide level2">
+<h2>1.2.mac</h2>
+<ul>
+<li>homebrewでのインストールだとこんな感じ</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">brew</span> tap homebrew/science
+<span class="ex">brew</span> install r</code></pre></div>
+</section><section id="linux" class="slide level2">
+<h2>1.3.linux</h2>
+<ul>
+<li>簡易的な方法を示します。</li>
+<li>ubuntu</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install r-base</code></pre></div>
+<ul>
+<li>centos</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> yum install epel-release
+<span class="fu">sudo</span> yum --enablerepo=epel install R</code></pre></div>
+</section></section>
+<section><section id="rstudio" class="titleslide slide level1"><h1>2.Rstudioのインストール</h1></section><section id="windows-1" class="slide level2">
+<h2>2.1.windows</h2>
+<ul>
+<li><a href="https://www.rstudio.com">Rstudio</a>のページからダウンロード，インストールします。</li>
+<li>別に難しくない</li>
+</ul>
+</section><section id="mac-1" class="slide level2">
+<h2>2.2.mac</h2>
+<ul>
+<li>homebrewでのインストール
+<ul>
+<li>brew-cask必須！</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">brew</span> cask install rstudio</code></pre></div>
+</section><section id="linux-1" class="slide level2">
+<h2>2.3.linux</h2>
+<ul>
+<li>ubuntu</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">wget</span> https://download1.rstudio.org/rstudio-1.1.447-amd64.deb
+<span class="fu">sudo</span> dpkg -i rstudio-1.1.447-amd64.deb</code></pre></div>
+<ul>
+<li>centos</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> yum install wget
+<span class="fu">wget</span> https://download2.rstudio.org/rstudio-server-rhel-1.1.442-x86_64.rpm
+<span class="fu">sudo</span> yum install rstudio-server-rhel-1.1.442-x86_64.rpm</code></pre></div>
+</section></section>
+<section><section id="operator" class="titleslide slide level1"><h1>3.Rの演算子</h1></section><section class="slide level2">
+<h2>3.1.算術演算子</h2>
+<ul>
+<li>ふつうの計算に使う</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">演算子</th>
+<th style="text-align: right;">使い方</th>
+<th style="text-align: right;">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>+</code></td>
+<td style="text-align: right;"><code>1 + 2</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>-</code></td>
+<td style="text-align: right;"><code>1 - 2</code></td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>*</code></td>
+<td style="text-align: right;"><code>2 * 3</code></td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>/</code></td>
+<td style="text-align: right;"><code>2 / 3</code></td>
+<td style="text-align: right;">0.6666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>^</code></td>
+<td style="text-align: right;"><code>2 ^ 3</code></td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+</section><section class="slide level2">
+<h2>3.2.代入演算子</h2>
+<ul>
+<li>代入に使う</li>
+<li><code>=</code> は非推奨，<code>&lt;-</code> を使う</li>
+<li><code>&lt;&lt;-</code> はグローバル環境への代入
+<ul>
+<li><code>&lt;&lt;-</code>よりもassign関数を使うほうがいい</li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">演算子</th>
+<th style="text-align: center;">使い方</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>&lt;-</code></td>
+<td style="text-align: center;"><code>a &lt;- 3</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;&lt;-</code></td>
+<td style="text-align: center;"><code>a &lt;&lt;- 5</code></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section><section class="titleslide slide level1"><h1>4.データ型</h1></section><section class="slide level2">
+<h2>4.1.ベクトル</h2>
+<ul>
+<li>Rではベクトルとして代入される。</li>
+<li>文字列は<code>&quot;&quot;</code>でくくる。</li>
+<li>数値はそのまま代入</li>
+<li>論理値は<code>TRUE</code>と<code>FALSE</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hoge &lt;-<span class="st"> &quot;やっほー&quot;</span>
+fuga &lt;-<span class="st"> </span><span class="fl">1.414</span>
+foo &lt;-<span class="st"> </span><span class="ot">TRUE</span>
+hoge; fuga; foo
+<span class="co">#&gt; [1] &quot;やっほー&quot;</span>
+<span class="co">#&gt; [1] 1.414</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>複数の値を代入するときは<code>c()</code>を使う
+<ul>
+<li>型強制が起こる
+<ul>
+<li>数値は文字列に</li>
+<li>論理値は数値か文字列に</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hoge &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;やっほー&quot;</span>, <span class="st">&quot;おっはー&quot;</span>)
+fuga &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.414</span>, <span class="fl">1.732</span>)
+foo &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>)
+hoge; fuga; foo
+<span class="co">#&gt; [1] &quot;やっほー&quot; &quot;おっはー&quot;</span>
+<span class="co">#&gt; [1] 1.414 1.732</span>
+<span class="co">#&gt; [1]  TRUE FALSE</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hoge2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;やっほー&quot;</span>, <span class="dv">1</span>, <span class="ot">TRUE</span>)
+fuga2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.414</span>, <span class="ot">TRUE</span>)
+hoge2; fuga2
+<span class="co">#&gt; [1] &quot;やっほー&quot; &quot;1&quot;        &quot;TRUE&quot;</span>
+<span class="co">#&gt; [1] 1.414 1.000</span></code></pre></div>
+</section><section class="slide level2">
+<h2>クイズ</h2>
+<h3>次のベクトルはどんなデータになるでしょう</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quiz1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">+</span><span class="ot">TRUE</span>, <span class="st">&quot;やっほー&quot;</span>)
+quiz2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">+</span><span class="ot">TRUE</span>, <span class="dv">3</span>) <span class="op">*</span><span class="st"> </span><span class="ot">FALSE</span></code></pre></div>
+</section><section class="slide level2">
+
+<h3>正解は</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quiz1
+<span class="co">#&gt; [1] &quot;2&quot;        &quot;やっほー&quot;</span>
+
+quiz2
+<span class="co">#&gt; [1] 0 0</span></code></pre></div>
+<p><code>TRUE</code>は<code>1</code>に，<code>FALSE</code>は<code>0</code>になります。</p>
+</section><section class="slide level2">
+<h2>4.1.1.ベクトルの計算では，リサイクルルールが使われます。</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)
+b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)
+c &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">*</span><span class="st"> </span><span class="dv">3</span>
+<span class="co">#&gt; [1]  3  6  9 12</span>
+a <span class="op">+</span><span class="st"> </span>b
+<span class="co">#&gt; [1] 2 4 4 6</span>
+b <span class="op">+</span><span class="st"> </span>a
+<span class="co">#&gt; [1] 2 4 4 6</span>
+a <span class="op">*</span><span class="st"> </span>c
+<span class="co">#&gt; Warning in a * c: longer object length is not a multiple of shorter object</span>
+<span class="co">#&gt; length</span>
+<span class="co">#&gt; [1] 1 4 9 4</span></code></pre></div>
+<p>小さいベクトルが，大きいベクトルにあわせて繰り返されます。</p>
+</section><section class="slide level2">
+<h2>4.1.2.ベクトルの要素を参照する</h2>
+<h3 id="1">ベクトルの要素は<code>[1]</code>からはじまる!</h3>
+<ul>
+<li>ベクトルの参照は線形代数と一緒</li>
+<li><code>[行番号,列番号]</code>で参照する!</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)
+<span class="kw">dim</span>(a) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>) <span class="co">#2次元配列</span>
+a
+<span class="co">#&gt;      [,1] [,2]</span>
+<span class="co">#&gt; [1,]    1    3</span>
+<span class="co">#&gt; [2,]    2    4</span>
+
+a[<span class="dv">1</span>,<span class="dv">2</span>]
+<span class="co">#&gt; [1] 3</span>
+
+a[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">2</span>]
+<span class="co">#&gt; [1] 3 4</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>代入もできる</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a
+<span class="co">#&gt;      [,1] [,2]</span>
+<span class="co">#&gt; [1,]    1    3</span>
+<span class="co">#&gt; [2,]    2    4</span>
+
+tmp &lt;-<span class="st"> </span>a[<span class="dv">2</span>,<span class="dv">1</span>]
+a[<span class="dv">2</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span>a[<span class="dv">1</span>,<span class="dv">2</span>]
+a[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>tmp
+a
+<span class="co">#&gt;      [,1] [,2]</span>
+<span class="co">#&gt; [1,]    1    2</span>
+<span class="co">#&gt; [2,]    3    4</span></code></pre></div>
+</section><section id="scanf" class="slide level2">
+<h2>4.2.scanfみたいなのも用意されてる</h2>
+<ul>
+<li>readline関数</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">readline</span>(<span class="st">&quot;入力してね: &quot;</span>)
+<span class="co">#&gt; 入力してね:</span>
+
+<span class="co">#&gt; 入力してね: ここに入力</span></code></pre></div>
+<ul>
+<li>これを使うと簡単なクイズができる。</li>
+</ul>
+</section><section class="slide level2">
+
+<h3>作ってみよう。</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quiz &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  answer &lt;-<span class="st"> &quot;さくらんぼ&quot;</span>
+  ans_u &lt;-<span class="st"> </span><span class="kw">readline</span>(<span class="st">&quot;おうとうってなんだ？: &quot;</span>)
+  <span class="cf">if</span> (ans_u <span class="op">==</span><span class="st"> </span>answer) <span class="kw">print</span>(<span class="st">&quot;あってるよ&quot;</span>) 
+  <span class="cf">else</span> <span class="kw">print</span>(<span class="st">&quot;まちがってるよ&quot;</span>)
+}
+<span class="kw">quiz</span>()
+<span class="co">#&gt; おうとうってなんだ？: </span>
+<span class="co">#&gt; [1] &quot;まちがってるよ&quot;</span></code></pre></div>
+</section></section>
+<section><section class="titleslide slide level1"><h1>5.他言語との連携</h1></section></section>
+<section><section id="c" class="titleslide slide level1"><h1>5.1.C言語</h1></section><section class="slide level2">
+
+<ul>
+<li>さっきのクイズをCにしてみると</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="pp">#include </span><span class="im">&quot;/usr/include/stdio.h&quot;</span>
+<span class="pp">#include </span><span class="im">&quot;/usr/include/stdlib.h&quot;</span>
+<span class="pp">#include </span><span class="im">&quot;/usr/include/string.h&quot;</span>
+<span class="pp">#include </span><span class="im">&quot;/usr/include/R/R.h&quot;</span>
+
+<span class="dt">void</span> quiz(<span class="dt">void</span>);
+
+<span class="dt">void</span> quiz(<span class="dt">void</span>) {
+  <span class="dt">char</span> ans_u[<span class="dv">256</span>];
+  <span class="dt">char</span> answer[] = <span class="st">&quot;さくらんぼ&quot;</span>;
+  printf(<span class="st">&quot;おうとうってなんだ？: &quot;</span>);
+  scanf(<span class="st">&quot;%s&quot;</span>,ans_u);
+  <span class="cf">if</span>(strcmp(answer,ans_u) == <span class="dv">0</span>) printf(<span class="st">&quot;あってるよ&quot;</span>);
+  <span class="cf">else</span> printf(<span class="st">&quot;まちがってるよ&quot;</span>);
+}</code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">gcc</span> -shared -fPIC -I/usr/include/R -o quiz_c.so quiz_c.c</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dyn.load</span>(<span class="st">&quot;./C/quiz_c.so&quot;</span>)
+<span class="kw">.C</span>(<span class="st">&#39;quiz&#39;</span>)
+<span class="co">#&gt; list()</span>
+<span class="co">#&gt; おうとうってなんだ？: まちがってるよ</span>
+<span class="kw">dyn.unload</span>(<span class="st">&quot;quiz_c.so&quot;</span>)</code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li><code>R.h</code>のinclude必要!</li>
+<li>ヘッダファイルのincludeには絶対パスで指定するのが簡単</li>
+<li>gccのオプションでヘッダファイルのパスを指定する。
+<ul>
+<li><code>-I/usr/include/R</code></li>
+<li>R.h内部でRconfig.hが呼び出されるため</li>
+</ul></li>
+</ul>
+</section><section id="Ccompile" class="slide level2">
+<h2>5.1.1.Cのコードはめんどい</h2>
+<ul>
+<li>関数の戻り値は<code>void</code>にする。</li>
+<li>引数はポインタを使う。</li>
+<li>R系のヘッダファイルを読み込む場合，gccで共有ライブラリを作る</li>
+<li>Rのバッチコマンドもあるけど使いづらい</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> CMD SHLIB hoge.c</code></pre></div>
+</section><section id="C2R" class="slide level2">
+<h2>5.1.2.Rからロード</h2>
+<ul>
+<li>形式は，<code>.so</code>か<code>.dll</code></li>
+<li><code>dyn.load(</code>“hoge.so”<code>)</code>で読み込む</li>
+<li><code>dyn.unload(</code>“hoge.so”<code>)</code>でアンロード
+<ul>
+<li>Rはメモリだけで処理するのでアンロードしておくといい</li>
+<li>fcloseぐらいに思っておく</li>
+</ul></li>
+<li><code>.C('関数名',引数)</code>か<code>.Call()</code>を使う</li>
+<li>RにはC用のデータ型が用意されている</li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>5.2.シェルスクリプト</h1></section><section id="shellscript" class="slide level2">
+<h2>5.2.1.シェルスクリプト</h2>
+<ul>
+<li>シェルでも再現してみる。</li>
+<li>これはけっこう素直に扱える。</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">-eq</span> 1<span class="bu"> ]</span> 
+<span class="kw">then</span>
+        <span class="bu">echo</span> <span class="st">&quot;おうとうってなんだ？&quot;</span>
+        <span class="ex">R</span> --vanilla --no-save --slave -f ./quiz_sh.R --args <span class="va">$1</span>
+
+<span class="kw">else</span>
+        <span class="bu">echo</span> <span class="st">&quot;引数の数が正しくありません。&quot;</span>
+<span class="kw">fi</span></code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans_u &lt;-<span class="st"> </span><span class="kw">commandArgs</span>(<span class="dt">trailingOnly =</span> <span class="ot">TRUE</span>)
+
+diagnosis &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;まちがってるよ</span><span class="ch">\n</span><span class="st">&quot;</span>,
+               <span class="st">&quot;あってるよ</span><span class="ch">\n</span><span class="st">&quot;</span>)
+
+<span class="kw">cat</span>( ans_u )
+<span class="kw">cat</span>( <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> )
+
+<span class="kw">cat</span>(diagnosis[ (ans_u <span class="op">==</span><span class="st"> &quot;さくらんぼ&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> ])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">chmod</span> u+x quiz_sh.sh</code></pre></div>
+</section><section id="commandargs" class="slide level2">
+<h2>5.2.2.commandArgs()</h2>
+<ul>
+<li><code>trailingOnly = TRUE</code>を指定する。
+<ul>
+<li><code>FALSE</code>だとコマンドとオプションも渡される。</li>
+</ul></li>
+<li>Rコマンドのオプションに<code>--args</code>を指定する。</li>
+<li>引数を複数わたすこともできる。</li>
+</ul>
+</section><section id="shebang" class="slide level2">
+<h2>5.2.3.shebang</h2>
+<ul>
+<li>シバンを変えることで<code>.R</code>スクリプトを直接実行できる。</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#! /usr/bin/R --vanilla --no-save --slave -f</span>
+
+<span class="ex">quiz</span> <span class="op">&lt;</span>- function() <span class="kw">{</span>
+  <span class="ex">answer</span> <span class="op">&lt;</span>- <span class="st">&quot;さくらんぼ&quot;</span>
+  <span class="ex">ans_u</span> <span class="op">&lt;</span>- readline(<span class="st">&quot;おうとうってなんだ？: &quot;</span>)
+  <span class="kw">if</span> <span class="kw">(</span><span class="ex">ans_u</span> == answer<span class="kw">)</span> <span class="ex">print</span>(<span class="st">&quot;あってるよ&quot;</span>) 
+  <span class="kw">else</span> <span class="ex">print</span>(<span class="st">&quot;まちがってるよ&quot;</span>)
+<span class="kw">}</span>
+<span class="fu">quiz()</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">chmod</span> u+x ファイル名</code></pre></div>
+</section><section class="slide level2">
+<h2>5.2.4.ヒアドキュメント</h2>
+<ul>
+<li>シェルのヒアドキュメントも使える</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> --vanilla --no-save --slave <span class="op">&lt;&lt; EOS</span>
+quiz &lt;- function() {
+  answer &lt;- &quot;さくらんぼ&quot;
+  ans_u &lt;- readline(&quot;おうとうってなんだ？: &quot;)
+  if (ans_u == answer) print(&quot;あってるよ&quot;) 
+  else print(&quot;まちがってるよ&quot;)
+}
+quiz()
+EOS
+
+#&gt; おうとうってなんだ？: 
+#&gt; [1] &quot;まちがってるよ&quot;</code></pre></div>
+</section></section>
+<section><section class="titleslide slide level1"><h1>他にも使える言語</h1></section><section class="slide level2">
+
+<ul>
+<li>C++</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>SQL</li>
+</ul>
+<p>などなどいろいろ用意されている。</p>
+</section></section>
+<section><section class="titleslide slide level1"><h1>さいごに</h1></section><section class="slide level2">
+
+<p id="lastpage">
+今回は，他言語との連携をメインにRを紹介しました。<br/> ここでは触れなかったことの方が多いです。<br/> 統計だけじゃない，Rを楽しみましょう！
+</p>
+</section><section class="slide level2">
+<h2>参考資料</h2>
+<ul>
+<li><a href="https://www.oreilly.co.jp/books/9784873115795/">アート・オブ・Rプログラミング</a></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="newbie_workshop_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="newbie_workshop_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
