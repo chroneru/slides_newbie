@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"dyn.unload(\"./C/quiz_point.so\")","line_number":0}],"message":"Error in dyn.unload(\"./C/quiz_point.so\") : \n  shared object '/home/vagrant/share/newbie/./C/quiz_point.so' was not loaded\n"}
