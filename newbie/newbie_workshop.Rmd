@@ -7,7 +7,7 @@ output:
     theme: sky
     self_contained: FALSE
     mainfont: "IPAPGothic"
-css: newbie_workshop.css
+css: Css/newbie_workshop.css
 ---
 
 ```{r setup, include=FALSE}
@@ -500,7 +500,7 @@ ggplot(
 
 ---
 
-![mtcars_tibble](mtcars_tibble.png)
+![mtcars_tibble](Image/newbie_workshop_image/mtcars_tibble.png)
 
 # さいごに
 
