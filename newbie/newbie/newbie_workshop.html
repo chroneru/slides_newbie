@@ -97,7 +97,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
     <style type="text/css">code{white-space: pre;}</style>
 
-    <link rel="stylesheet" href="newbie_workshop.css"/>
+    <link rel="stylesheet" href="Css/newbie_workshop.css"/>
 
 <!-- Printing and PDF exports -->
 <script id="paper-css" type="application/dynamic-css">
@@ -683,12 +683,16 @@ quiz2
 <span class="co">#&gt; [1] 0 0</span></code></pre></div>
 <p><code>TRUE</code>は<code>1</code>に，<code>FALSE</code>は<code>0</code>になります。</p>
 </section><section class="slide level2">
-<h2>4.1.1.ベクトルの計算では，リサイクルルールが使われます。</h2>
+<h2>4.1.1.リサイクルルール</h2>
+<ul>
+<li>小さいベクトルが，大きいベクトルにあわせて繰り返されます。</li>
+<li>ベクトルの長さによって警告が出る</li>
+</ul>
+</section><section class="slide level2">
+
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)
 c &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</code></pre></div>
-</section><section class="slide level2">
-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">*</span><span class="st"> </span><span class="dv">3</span>
 <span class="co">#&gt; [1]  3  6  9 12</span>
 a <span class="op">+</span><span class="st"> </span>b
@@ -699,7 +703,6 @@ a <span class="op">*</span><span class="st"> </span>c
 <span class="co">#&gt; Warning in a * c: longer object length is not a multiple of shorter object</span>
 <span class="co">#&gt; length</span>
 <span class="co">#&gt; [1] 1 4 9 4</span></code></pre></div>
-<p>小さいベクトルが，大きいベクトルにあわせて繰り返されます。</p>
 </section><section class="slide level2">
 <h2>4.1.2.ベクトルの要素を参照する</h2>
 <h3 id="1">ベクトルの要素は<code>[1]</code>からはじまる!</h3>
@@ -736,8 +739,26 @@ a
 <span class="co">#&gt;      [,1] [,2]</span>
 <span class="co">#&gt; [1,]    1    2</span>
 <span class="co">#&gt; [2,]    3    4</span></code></pre></div>
+</section><section id="na" class="slide level2">
+<h2>4.2.NA</h2>
+<ul>
+<li><code>NA</code>はNot Available</li>
+<li>なにかわからない値に使う</li>
+<li>特別な値</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">na_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
+<span class="kw">is.na</span>(na_vec)
+<span class="co">#&gt; [1] TRUE TRUE TRUE</span>
+na_vec <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+<span class="co">#&gt; [1] NA NA NA</span>
+na_vec <span class="op">==</span><span class="st"> </span><span class="dv">1</span>
+<span class="co">#&gt; [1] NA NA NA</span>
+na_vec <span class="op">==</span><span class="st"> </span><span class="ot">NA</span>
+<span class="co">#&gt; [1] NA NA NA</span>
+na_vec <span class="op">!=</span><span class="st"> </span><span class="ot">NA</span>
+<span class="co">#&gt; [1] NA NA NA</span></code></pre></div>
 </section><section id="scanf" class="slide level2">
-<h2>4.2.scanfみたいなのも用意されてる</h2>
+<h2>4.3.scanfみたいなのも用意されてる</h2>
 <ul>
 <li>readline関数</li>
 </ul>
@@ -893,12 +914,12 @@ diagnosis &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="s
 <span class="kw">}</span>
 <span class="fu">quiz()</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">chmod</span> u+x ファイル名</code></pre></div>
-</section><section class="slide level2">
+</section><section id="program_with_heredoc" class="slide level2">
 <h2>5.2.4.ヒアドキュメント</h2>
 <ul>
 <li>シェルのヒアドキュメントも使える</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> --vanilla --no-save --slave <span class="op">&lt;&lt; `EOS`</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> --vanilla --no-save --slave <span class="op">&lt;&lt; EOF</span>
 quiz &lt;- function() {
   answer &lt;- &quot;さくらんぼ&quot;
   ans_u &lt;- readline(&quot;おうとうってなんだ？: &quot;)
@@ -906,10 +927,8 @@ quiz &lt;- function() {
   else print(&quot;まちがってるよ&quot;)
 }
 quiz()
-<span class="kw">`</span><span class="ex">EOS</span><span class="kw">`</span>
-
-#&gt; おうとうってなんだ？: 
-#&gt; [1] &quot;まちがってるよ&quot;</code></pre></div>
+EOF</code></pre></div>
+<p>```</p>
 </section></section>
 <section><section class="titleslide slide level1"><h1>5.3.他にも使える言語</h1></section><section class="slide level2">
 
@@ -918,24 +937,40 @@ quiz()
 <li>Python</li>
 <li>Ruby</li>
 <li>SQL</li>
+<li>Haskell</li>
+<li>Rust</li>
 </ul>
 <p>などなどいろいろ用意されている。</p>
 </section></section>
 <section><section class="titleslide slide level1"><h1>6.パッケージ</h1></section><section class="slide level2">
-<h2>6.1.パッケージとは</h2>
+<h2>6.1.1.パッケージとは</h2>
 <h3>いろんな人がつくった便利な関数群</h3>
 <ul>
 <li><code>install.packages()</code>でインストール</li>
-<li><code>library()</code>で読み込み</li>
+<li><code>library()</code>で読み込み
+<ul>
+<li><code>require()</code>を使う人もいる。</li>
+</ul></li>
 <li><code>detach()</code>でアンロード</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;パッケージ名&quot;</span>)
 <span class="kw">library</span>(パッケージ名)
 <span class="kw">detach</span>(<span class="st">&quot;package:パッケージ名&quot;</span>, <span class="dt">unload =</span> <span class="ot">TRUE</span>)</code></pre></div>
+</section><section id="install_with_heredoc" class="slide level2">
+<h2>6.1.2.ヒアドキュメント</h2>
+<ul>
+<li>ヒアドキュメントでログをとる。</li>
+<li>インストール失敗時にべんり!</li>
+<li>windowsは使えない。</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> --no-save <span class="op">&lt;&lt; EOF</span> <span class="op">&gt;</span> <span class="ex">logfile</span> <span class="op">2&gt;&amp;1</span>
+install.packages(&quot;パッケージ名&quot;)
+EOF</code></pre></div>
+<p>```</p>
 </section><section id="tidyverse" class="slide level2">
 <h2>6.2.tidyverse群</h2>
 <ul>
-<li>よくつかわれるパッケージ</li>
+<li>よくつかわれるパッケージをまとめたもの</li>
 <li>データ処理につかう</li>
 <li>パイプ<code>%&gt;%</code>が使える</li>
 <li>グラフをきれいにかける</li>
@@ -948,9 +983,16 @@ quiz()
 <li>インストール時につまづきやすい</li>
 <li>エラーを読むと解決する</li>
 </ul>
-</section></section>
-<section><section id="tidy_example" class="titleslide slide level1"><h1>7.tidyverseの実践</h1></section><section id="ggplot" class="slide level2">
-<h2>7.1.ggplot</h2>
+</section><section id="tidy_example" class="slide level2">
+<h2>6.3.tidyverseの実践</h2>
+<ul>
+<li>ggplotについての例を示す</li>
+<li>tidyverseパッケージが必要</li>
+<li>ggplot2でもOK</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+</section><section id="ggplot" class="slide level2">
+<h2>6.3.1.ggplot</h2>
 <ul>
 <li>グラフをつくる関数</li>
 <li>レイヤーを重ねる</li>
@@ -977,7 +1019,219 @@ quiz()
 </ul>
 </section><section class="slide level2">
 
-<p><img src="mtcars_tibble.png" alt="mtcars_tibble" /></p>
+<p><img src="Image/newbie_workshop_image/mtcars_tibble.png" alt="mtcars_tibble" /></p>
+</section></section>
+<section><section class="titleslide slide level1"><h1>7.関数</h1></section><section id="function" class="slide level2">
+<h2>7.1.function()</h2>
+<ul>
+<li><code>function()</code>をつかう。</li>
+<li>()のなかに引数をあたえる。</li>
+<li>中のプログラムは<code>{}</code>でくくる。</li>
+</ul>
+</section><section class="slide level2">
+<h2>7.2.関数例:パレート図の統計量</h2>
+<h3>あんまりよくない</h3>
+<ul>
+<li>個数を数える</li>
+<li>大きいものからならべる(desc)</li>
+<li>一個前のを自身に足す</li>
+<li>割合を計算する</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pareto_func &lt;-<span class="st"> </span><span class="cf">function</span>(vec) {
+
+res_count &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span> =<span class="st"> </span><span class="ot">NA</span>, <span class="st">&quot;b&quot;</span> =<span class="st"> </span><span class="ot">NA</span>, <span class="st">&quot;c&quot;</span> =<span class="st"> </span><span class="ot">NA</span>, <span class="st">&quot;d&quot;</span> =<span class="st"> </span><span class="ot">NA</span>, <span class="st">&quot;e&quot;</span> =<span class="st"> </span><span class="ot">NA</span>)
+<span class="cf">for</span>(moji <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>)) {
+    res_count[moji] &lt;-<span class="st"> </span><span class="kw">sum</span>(vec <span class="op">==</span><span class="st"> </span>moji)
+}
+res_count &lt;-<span class="st"> </span><span class="kw">sort</span>(res_count, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)
+res_pareto &lt;-<span class="st"> </span><span class="kw">cumsum</span>(res_count)
+res_pareto &lt;-<span class="st"> </span>res_pareto <span class="op">/</span><span class="st"> </span>res_pareto[<span class="dv">5</span>]
+<span class="kw">list</span>(<span class="st">&quot;count&quot;</span> =<span class="st"> </span>res_count, <span class="st">&quot;density&quot;</span> =<span class="st"> </span>res_pareto)
+}</code></pre></div>
+<ul>
+<li>一般化していない</li>
+<li>あとでつかってみます</li>
+</ul>
+</section><section class="slide level2">
+
+<ul>
+<li>引数は，仮引数
+<ul>
+<li><code>function(a = 5)</code>のようにデフォルトも設定できる</li>
+</ul></li>
+<li><code>c(&quot;a&quot; = NA)</code>で名前を与えられる。
+<ul>
+<li><code>names(ベクトル)</code>で名前を確認できる。</li>
+</ul></li>
+<li><code>sort()</code>はならべかえ</li>
+<li><code>cumsum()</code>は累積和</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cumsum</span>( <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))
+<span class="co">#&gt; [1]  1  3  6 10 15</span></code></pre></div>
+</section></section>
+<section><section class="titleslide slide level1"><h1>8.データ</h1></section><section id="read.csv" class="slide level2">
+<h2>8.1.1.read.csv</h2>
+<ul>
+<li>標準で使える読み込み関数</li>
+<li><code>stringAsFactors = FALSE</code>にする
+<ul>
+<li>文字列が変化するのを防ぐ</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;ファイル名&quot;</span>, <span class="dt">stringAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+</section><section id="read_csv" class="slide level2">
+<h2>8.1.2.read_csv</h2>
+<ul>
+<li>tidyverse群に用意されてる関数(readr)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_csv</span>(
+  <span class="st">&quot;ファイル名&quot;</span>,
+  <span class="dt">locale =</span> <span class="kw">locale</span>(<span class="dt">encoding =</span> <span class="st">&quot;エンコード&quot;</span>)
+)</code></pre></div>
+</section><section id="write.csv" class="slide level2">
+<h2>8.2.write.csv</h2>
+<ul>
+<li>標準のcsv作成関数</li>
+<li><code>row.names = FALSE</code>
+<ul>
+<li>行名が追加されるのを防ぐ</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h2>8.3.サンプルデータの作成</h2>
+<ul>
+<li>Rにはさまざまなデータ作成関数がある</li>
+<li><code>sample()</code></li>
+<li><code>runif()</code></li>
+<li><code>rnorm()</code></li>
+<li><code>rgamma()</code></li>
+</ul>
+</section><section id="sample" class="slide level2">
+<h2>8.3.1.sample</h2>
+<ul>
+<li><code>sample()</code>で単純なデータを作成できる</li>
+<li><code>size</code>は何個とりだすか</li>
+<li><code>replace</code>は複数回とりだせるか</li>
+<li><code>prob</code>は確率を指定する。
+<ul>
+<li>合計が1じゃなくても大丈夫</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">2</span>)
+<span class="co">#&gt; [1] 10 53</span></code></pre></div>
+</section><section class="slide level2">
+<h2>8.3.2.その他</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">関数</th>
+<th style="text-align: center;">確率分布</th>
+<th style="text-align: center;">使い方</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>runif()</code></td>
+<td style="text-align: center;">一様分布</td>
+<td style="text-align: center;"><code>runif(5)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>rnorm()</code></td>
+<td style="text-align: center;">正規分布</td>
+<td style="text-align: center;"><code>rnorm(5)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>rgamma()</code></td>
+<td style="text-align: center;">ガンマ分布</td>
+<td style="text-align: center;"><code>rgamma(5,shape = 2, rate = 5)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>rbeta()</code></td>
+<td style="text-align: center;">ベータ分布</td>
+<td style="text-align: center;"><code>rbeta(5, shape1 = 0.5, shape2 = 0.5)</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>shapeはk, rateはシータ</li>
+<li>shape1はα, shape2はβ</li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>9.使用例</h1></section><section id="pareto_graph" class="slide level2">
+<h2>9.1.パレート図</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob_vec &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">size =</span> <span class="dv">5</span>)
+vec1 &lt;-<span class="st"> </span><span class="kw">sample</span>(
+  <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,
+  <span class="dt">size =</span> <span class="dv">10000</span>,
+  <span class="dt">replace =</span> <span class="ot">TRUE</span>,
+  <span class="dt">prob =</span> prob_vec
+)
+replace_abcde &lt;-<span class="st"> </span><span class="cf">function</span>(vec1) {
+  num &lt;-<span class="st"> </span><span class="dv">1</span>
+  <span class="cf">for</span>(moji <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>)) {
+    vec1[vec1 <span class="op">==</span><span class="st"> </span>num] &lt;-<span class="st"> </span>moji
+    num &lt;-<span class="st"> </span>num <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  }
+  <span class="kw">assign</span>(<span class="st">&quot;vec1&quot;</span>, vec1, <span class="dt">envir =</span> <span class="kw">parent.env</span>(<span class="kw">environment</span>()))
+}
+<span class="kw">replace_abcde</span>(vec1)
+result &lt;-<span class="st"> </span><span class="kw">pareto_func</span>(vec1)
+result
+<span class="co">#&gt; $count</span>
+<span class="co">#&gt;    d    b    e    c    a </span>
+<span class="co">#&gt; 3320 2674 1950 1347  709 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $density</span>
+<span class="co">#&gt;      d      b      e      c      a </span>
+<span class="co">#&gt; 0.3320 0.5994 0.7944 0.9291 1.0000</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>図にすると</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(result) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">name =</span> <span class="kw">names</span>(result<span class="op">$</span>count),
+    <span class="dt">count_density =</span> count <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(count)
+  )</code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(
+    <span class="dt">yintercept =</span> <span class="kw">c</span>(<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="dv">1</span>),
+    <span class="dt">size =</span> <span class="fl">0.2</span>,
+    <span class="dt">color =</span> <span class="st">&quot;#ff0000&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(
+    <span class="kw">aes</span>(name, count_density, <span class="dt">fill =</span> density),
+    <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(name, density, <span class="dt">group =</span><span class="st">&quot;1&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(
+    <span class="kw">aes</span>(name, density, <span class="dt">color =</span> density),
+    <span class="dt">size =</span> <span class="dv">5</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits =</span> result<span class="op">$</span>name) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;#006600&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ccffcc&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;#006600&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ccffcc&quot;</span>) <span class="op">+</span>
+<span class="co">#  viridis::scale_fill_viridis(option=&quot;inferno&quot;) +</span>
+<span class="co">#  viridis::scale_color_viridis() +</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">x =</span> <span class="kw">names</span>(result<span class="op">$</span>count),
+    <span class="dt">y =</span> <span class="ot">NULL</span>
+    ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)
+
+<span class="co"># ggsave(&quot;pareto_graph.png&quot;)</span></code></pre></div>
+<p><a href="newbie_workshop_pages.html#pareto_graph">見やすい方</a></p>
+</section><section class="slide level2">
+
+<p><img src="Image/newbie_workshop_image/pareto_graph.png" width="70%" style="display: block; margin: auto;" /></p>
 </section></section>
 <section><section class="titleslide slide level1"><h1>さいごに</h1></section><section class="slide level2">
 
