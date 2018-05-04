@@ -1,7 +1,0 @@
-"0","#> list()
-#> おうとうってなんだ？: まちがってるよ
-dyn.unload(""./C/quiz_point.so"")
-"
-"2","Error in dyn.unload(""./C/quiz_point.so"") : 
-  shared object '/home/vagrant/share/newbie/./C/quiz_point.so' was not loaded
-"

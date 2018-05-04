@@ -75,7 +75,8 @@
 }
 
 /* including the code style , li has setting */
-.reveal ul li code {
+.reveal ul li code /*,
+.reveal table code*/ {
   color: magenta;
 }
 
