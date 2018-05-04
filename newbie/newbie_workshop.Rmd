@@ -6,8 +6,9 @@ output:
   revealjs::revealjs_presentation:
     theme: sky
     self_contained: FALSE
-    mainfont: "IPAPGothic"
-css: Css/newbie_workshop.css
+    css: Css/newbie_workshop.css
+  html_document: 
+    css: Css/newbie_workshop_pages.css
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +20,8 @@ knitr::opts_chunk$set(
 )
 #TRUEでprompt表示
 #knitr::opts_current$set(prompt=FALSE, eval = FALSE)
+#rmarkdown::render("newbie_workshop.Rmd", "revealjs_presentation", "newbie_workshop.html")
+#rmarkdown::render("newbie_workshop.Rmd", "html_document", "newbie_workshop_pages.html")
 
 library(tidyverse)
 ```
@@ -185,15 +188,18 @@ quiz2
 
 `TRUE`は`1`に，`FALSE`は`0`になります。
 
-## 4.1.1.ベクトルの計算では，リサイクルルールが使われます。
+## 4.1.1.リサイクルルール
+
+* 小さいベクトルが，大きいベクトルにあわせて繰り返されます。
+* ベクトルの長さによって警告が出る
+
+---
 
 ```{r calc_vector}
 a <- c(1,2,3,4)
 b <- c(1,2)
 c <- c(1,2,3)
 ```
-
----
 
 ```{r res_calc}
 a * 3
@@ -202,7 +208,7 @@ b + a
 a * c
 ```
 
-小さいベクトルが，大きいベクトルにあわせて繰り返されます。
+
 
 ## 4.1.2.ベクトルの要素を参照する
 
@@ -234,7 +240,23 @@ a[1,2] <- tmp
 a
 ```
 
-## 4.2.scanfみたいなのも用意されてる
+## 4.2.NA
+
+* `NA`はNot Available
+  * なにかわからない値に使う
+* 特別な値
+
+
+```{r na_ex}
+na_vec <- c(NA, NA, NA)
+is.na(na_vec)
+na_vec + 1
+na_vec == 1
+na_vec == NA
+na_vec != NA
+```
+
+## 4.3.scanfみたいなのも用意されてる
 
 * readline関数
 
@@ -259,6 +281,9 @@ quiz <- function() {
 }
 quiz()
 ```
+
+
+
 
 # 5.他言語との連携
 
@@ -407,12 +432,12 @@ quiz()
 chmod u+x ファイル名
 ```
 
-## 5.2.4.ヒアドキュメント
+## 5.2.4.ヒアドキュメント {#program_with_heredoc}
 
 * シェルのヒアドキュメントも使える
 
-```{bash quiz_here}
-R --vanilla --no-save --slave << `EOS`
+```bash
+R --vanilla --no-save --slave << EOF
 quiz <- function() {
   answer <- "さくらんぼ"
   ans_u <- readline("おうとうってなんだ？: ")
@@ -420,7 +445,8 @@ quiz <- function() {
   else print("まちがってるよ")
 }
 quiz()
-`EOS`
+EOF
+```
 
 ```
 
@@ -432,17 +458,20 @@ quiz()
 * Python
 * Ruby
 * SQL
+* Haskell
+* Rust
 
 などなどいろいろ用意されている。
 
 # 6.パッケージ
 
-## 6.1.パッケージとは
+## 6.1.1.パッケージとは
 
 ### いろんな人がつくった便利な関数群
 
 * `install.packages()`でインストール
 * `library()`で読み込み
+    * `require()`を使う人もいる。
 * `detach()`でアンロード
 
 ```{r pkg_func, eval=FALSE}
@@ -451,9 +480,23 @@ library(パッケージ名)
 detach("package:パッケージ名", unload = TRUE)
 ```
 
+## 6.1.2.ヒアドキュメント {#install_with_heredoc}
+
+* ヒアドキュメントでログをとる。
+* インストール失敗時にべんり!
+* windowsは使えない。
+
+```bash
+R --no-save << EOF > logfile 2>&1
+install.packages("パッケージ名")
+EOF
+```
+
+```
+
 ## 6.2.tidyverse群
 
-* よくつかわれるパッケージ
+* よくつかわれるパッケージをまとめたもの
 * データ処理につかう
 * パイプ`%>%`が使える
 * グラフをきれいにかける
@@ -468,9 +511,18 @@ library(tidyverse)
 * インストール時につまづきやすい
 * エラーを読むと解決する
 
-# 7.tidyverseの実践 {#tidy_example}
+## 6.3.tidyverseの実践 {#tidy_example}
 
-## 7.1.ggplot
+* ggplotについての例を示す
+* tidyverseパッケージが必要
+* ggplot2でもOK
+
+```{r ready_tidyverse, eval = FALSE}
+library(tidyverse)
+```
+
+
+## 6.3.1.ggplot
 
 * グラフをつくる関数
 * レイヤーを重ねる
@@ -501,6 +553,197 @@ ggplot(
 ---
 
 ![mtcars_tibble](Image/newbie_workshop_image/mtcars_tibble.png)
+
+# 7.関数
+
+## 7.1.function()
+
+* `function()`をつかう。
+* ()のなかに引数をあたえる。
+* 中のプログラムは`{}`でくくる。
+
+## 7.2.関数例:パレート図の統計量
+
+### あんまりよくない
+
+* 個数を数える
+* 大きいものからならべる(desc)
+* 一個前のを自身に足す
+* 割合を計算する
+
+---
+
+```{r pareto_func}
+pareto_func <- function(vec) {
+
+res_count <- c("a" = NA, "b" = NA, "c" = NA, "d" = NA, "e" = NA)
+for(moji in c("a", "b", "c", "d", "e")) {
+    res_count[moji] <- sum(vec == moji)
+}
+res_count <- sort(res_count, decreasing = TRUE)
+res_pareto <- cumsum(res_count)
+res_pareto <- res_pareto / res_pareto[5]
+list("count" = res_count, "density" = res_pareto)
+}
+```
+
+* 一般化していない
+* あとでつかってみます
+
+---
+
+* 引数は，仮引数
+    * `function(a = 5)`のようにデフォルトも設定できる
+* `c("a" = NA)`で名前を与えられる。
+    * `names(ベクトル)`で名前を確認できる。
+* `sort()`はならべかえ
+* `cumsum()`は累積和
+
+```{r}
+cumsum( c(1, 2, 3, 4, 5))
+```
+
+# 8.データ
+
+## 8.1.1.read.csv
+
+* 標準で使える読み込み関数
+* `stringAsFactors = FALSE`にする
+    * 文字列が変化するのを防ぐ
+    
+```r
+read.csv("ファイル名", stringAsFactors = FALSE)
+```
+
+## 8.1.2.read_csv
+
+* tidyverse群に用意されてる関数(readr)
+
+```r
+read_csv(
+  "ファイル名",
+  locale = locale(encoding = "エンコード")
+)
+```
+
+## 8.2.write.csv
+
+* 標準のcsv作成関数
+* `row.names = FALSE`
+    * 行名が追加されるのを防ぐ
+
+## 8.3.サンプルデータの作成
+
+* Rにはさまざまなデータ作成関数がある
+* `sample()`
+* `runif()`
+* `rnorm()`
+* `rgamma()`
+
+## 8.3.1.sample
+
+* `sample()`で単純なデータを作成できる
+* `size`は何個とりだすか
+* `replace`は複数回とりだせるか
+* `prob`は確率を指定する。
+    * 合計が1じゃなくても大丈夫
+
+```{r sample_ex}
+sample(1:100, size = 2)
+```
+
+## 8.3.2.その他
+
+|  関数   | 確率分布 |   使い方   |
+|:-------:|:--------:|:-----------:
+|`runif()`|一様分布|`runif(5)`|
+|`rnorm()`|正規分布|`rnorm(5)`|
+|`rgamma()`|ガンマ分布|`rgamma(5,shape = 2, rate = 5)`|
+|`rbeta()`|ベータ分布|`rbeta(5, shape1 = 0.5, shape2 = 0.5)`|
+
+* shapeはk, rateはシータ
+* shape1はα, shape2はβ
+
+# 9.使用例
+
+## 9.1.パレート図 {#pareto_graph}
+
+```{r pareto_play}
+prob_vec <- sample(1:5, size = 5)
+vec1 <- sample(
+  1:5,
+  size = 10000,
+  replace = TRUE,
+  prob = prob_vec
+)
+replace_abcde <- function(vec1) {
+  num <- 1
+  for(moji in c("a", "b", "c", "d", "e")) {
+    vec1[vec1 == num] <- moji
+    num <- num + 1
+  }
+  assign("vec1", vec1, envir = parent.env(environment()))
+}
+replace_abcde(vec1)
+result <- pareto_func(vec1)
+result
+```
+
+---
+
+* 図にすると
+
+```{r pareto_tibble}
+result <- as_tibble(result) %>% 
+  mutate(
+    name = names(result$count),
+    count_density = count / sum(count)
+  )
+```
+
+---
+
+```{r pareto_graph, fig.show = "hide"}
+result %>% 
+  ggplot() +
+  geom_hline(
+    yintercept = c(0.7,0.9,1),
+    size = 0.2,
+    color = "#ff0000"
+  ) +
+  geom_bar(
+    aes(name, count_density, fill = density),
+    stat = "identity"
+  ) +
+  geom_line(aes(name, density, group ="1")) +
+  geom_point(
+    aes(name, density, color = density),
+    size = 5
+  ) +
+  scale_x_discrete(limits = result$name) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
+  scale_color_gradient(low = "#006600", high = "#ccffcc") +
+  scale_fill_gradient(low = "#006600", high = "#ccffcc") +
+#  viridis::scale_fill_viridis(option="inferno") +
+#  viridis::scale_color_viridis() +
+  coord_cartesian(ylim = c(0,1)) +
+  labs(
+    x = names(result$count),
+    y = NULL
+    ) +
+  theme(legend.position = "none")
+
+# ggsave("pareto_graph.png")
+```
+
+[見やすい方](newbie_workshop_pages.html#pareto_graph)
+
+---
+
+```{r import_pareto_graph, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
+knitr::include_graphics("Image/newbie_workshop_image/pareto_graph.png")
+```
+
 
 # さいごに
 
