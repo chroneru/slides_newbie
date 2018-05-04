@@ -1,0 +1,52 @@
+---
+title: NULL
+author: "Reo"
+date: "2018/8/02"
+output:
+  html_document: 
+    self_contained: FALSE
+    theme: NULL
+    highlight: NULL
+css: Css/newbie_workshop_poster.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+library(leaflet)
+view_lng <- 140.760
+view_lat <- 41.814461
+site_lng <- 140.757159
+site_lat <- 41.814461
+site_zoom <- 17
+```
+
+
+# はこだてでR
+
+はこだてでRをやってみませんか？  
+Rの勉強会を開催します。
+
+8月02日,午後3時から6時
+
+参加費
+    学生300円,社会人500円
+
+[MIRAI BASE](https://peraichi.com/landing_pages/view/miraibase)
+
+[bit.ly/HakodateR](https://bit.ly/HakodateR)
+
+```{r site_plot, fig.width=6, fig.asp=0.618, out.width="50%"}
+leaflet() %>% 
+    setView(
+    lng = view_lng,
+    lat = view_lat,
+    zoom = site_zoom
+  ) %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = site_lng,
+    lat = site_lat
+  )
+
+```
+
