@@ -857,28 +857,25 @@ ToothGrowth2_bayes_lm
 ```{r , fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", eval=FALSE}
 # Tooth_length = 3.312 + 11.703 * Dose
 # Tooth_length = 11.571 + 7.796 * Dose
-Dose_range <- data.frame(Dose = c(0.5, 2), Tooth_length = c(4, 34))
 ToothGrowth2 %>% 
   group_by(Supplement) %>% 
   ggplot(aes(Dose, Tooth_length, color = Supplement)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, size = 2) +
   stat_function(
-    data = Dose_range,
-    mapping = aes(Dose),
     fun = function(Dose) 3.312 + 11.703 * Dose,
     geom = "line",
     color = "#00ffc4",
-    size = 0.5,
+    size = 0.6,
+    xlim = c(0.5, 2.0),
     show.legend = TRUE
   ) +
   stat_function(
-    data = Dose_range,
-    mapping = aes(Dose),
     fun = function(Dose) 11.571 + 7.796 * Dose,
     geom = "line",
     color = "#ffe4f1",
     size = 0.5,
+    xlim = c(0.5, 2.0),
     show.legend = TRUE
   )
 ```

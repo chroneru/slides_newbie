@@ -118,4 +118,5 @@ newbie_workshop_image/   poster_background_image/
 ]0;~/share/newbie/Image[vagrant@localhost Image]$ rm ../[K[K[K./b[Ki[KIm[K[Knewbie_workshop_image/bayes_and_lm_plot.png 
 ]0;~/share/newbie/Image[vagrant@localhost Image]$ mv ../bayes_and_lm_plot.png ls[K[K./newbie_workshop_image/
 ]0;~/share/newbie/Image[vagrant@localhost Image]$  echo 35529D5C && /usr/bin/env && echo 13CACAE0[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmv ../bayes_and_lm_plot.png ./newbie_workshop_image/
+]0;~/share/newbie/Image[vagrant@localhost Image]$  echo 35529D5C && /usr/bin/env && echo 13CACAE0[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmv ../bayes_and_lm_plot.png ./newbie_workshop_image/
 ]0;~/share/newbie/Image[vagrant@localhost Image]$ 
