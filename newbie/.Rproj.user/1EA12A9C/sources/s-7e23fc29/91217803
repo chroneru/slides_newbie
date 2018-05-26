@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526805686288.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "91217803",
+    "lastKnownWriteTime" : 7310595015707721734,
+    "last_content_update" : 1526805686288,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "492784C3",
+        "caption" : "ToothGrowth2",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=ToothGrowth2&cache_key=492784C3",
+        "displayedObservations" : 60,
+        "environment" : "",
+        "object" : "ToothGrowth2",
+        "preview" : 0,
+        "totalObservations" : 60,
+        "variables" : 3
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
