@@ -63,24 +63,19 @@
 
 /* ul's setting */
 
-.reveal ul,
-.reveal ol {
+.reveal ul {
   display: block;
 }
 
-.reveal ul>li,
-.reveal ol>li {
+.reveal ul>li {
   font-size: 130%;
 }
-.reveal ul>li>ul>li,
-.reveal ol>li>ol>li {
+.reveal ul>li>ul>li {
   font-size: 100%;
 }
 
 /* including the code style , li has setting */
-.reveal ul li code,
-.reveal ol li code /*,
-.reveal table code*/ {
+.reveal ul li code {
   color: magenta;
 }
 

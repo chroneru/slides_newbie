@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1522922715420.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "874234664",
+    "id" : "BDF1453E",
+    "lastKnownWriteTime" : 1527304466,
+    "last_content_update" : 1527304466652,
+    "path" : "~/share/newbie/newbie_workshop.Rmd",
+    "project_path" : "newbie_workshop.Rmd",
+    "properties" : {
+        "cursorPosition" : "883,0",
+        "last_setup_crc32" : "7e23fc29efc53116",
+        "marks" : "<:883,0\n>:883,0",
+        "scrollLine" : "872",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
