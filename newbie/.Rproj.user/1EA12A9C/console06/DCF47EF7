@@ -1,0 +1,122 @@
+]0;~/share/newbie[?1034h[vagrant@localhost newbie]$ [K[vagrant@localhost newbie]$ top
+[?1h=[?25l[H[2J(B[mtop - 00:22:03 up 36 min,  1 user,  load average: 0.00, 0.01, 0.03(B[m[39;49m(B[m[39;49m[K
+Tasks:(B[m[39;49m[1m  92 (B[m[39;49mtotal,(B[m[39;49m[1m   2 (B[m[39;49mrunning,(B[m[39;49m[1m  90 (B[m[39;49msleeping,(B[m[39;49m[1m   0 (B[m[39;49mstopped,(B[m[39;49m[1m   0 (B[m[39;49mzombie(B[m[39;49m(B[m[39;49m[K
+%Cpu(s):(B[m[39;49m[1m  6.2 (B[m[39;49mus,(B[m[39;49m[1m  0.0 (B[m[39;49msy,(B[m[39;49m[1m  0.0 (B[m[39;49mni,(B[m[39;49m[1m 93.8 (B[m[39;49mid,(B[m[39;49m[1m  0.0 (B[m[39;49mwa,(B[m[39;49m[1m  0.0 (B[m[39;49mhi,(B[m[39;49m[1m  0.0 (B[m[39;49msi,(B[m[39;49m[1m  0.0 (B[m[39;49mst(B[m[39;49m(B[m[39;49m[K
+KiB Mem :(B[m[39;49m[1m   500076 (B[m[39;49mtotal,(B[m[39;49m[1m    16636 (B[m[39;49mfree,(B[m[39;49m[1m   225552 (B[m[39;49mused,(B[m[39;49m[1m   257888 (B[m[39;49mbuff/cache(B[m[39;49m(B[m[39;49m[K
+KiB Swap:(B[m[39;49m[1m  1572860 (B[m[39;49mtotal,(B[m[39;49m[1m  1572860 (B[m[39;49mfree,(B[m[39;49m[1m        0 (B[m[39;49mused.(B[m[39;49m[1m   234792 (B[m[39;49mavail Mem (B[m[39;49m(B[m[39;49m[K
+[K
+[7m  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                                                                       (B[m[39;49m[K
+(B[m  352 root      20   0       0      0      0 S  5.9  0.0   0:00.41 xfsaild/dm-0                                                                  (B[m[39;49m[K
+(B[m  568 rstudio+  20   0  288556   4664   3340 S  5.9  0.9   0:00.75 rserver                                                                       (B[m[39;49m[K
+(B[m[1m 3217 vagrant   20   0   57400   2064   1484 R  5.9  0.4   0:00.04 top                                                                           (B[m[39;49m[K
+(B[m    1 root      20   0  128168   6832   4064 S  0.0  1.4   0:00.90 systemd                                                                       (B[m[39;49m[K
+(B[m    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd                                                                      (B[m[39;49m[K
+(B[m    3 root      20   0       0      0      0 S  0.0  0.0   0:00.04 ksoftirqd/0                                                                   (B[m[39;49m[K
+(B[m    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H                                                                  (B[m[39;49m[K
+(B[m    6 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kworker/u2:0                                                                  (B[m[39;49m[K
+(B[m    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0                                                                   (B[m[39;49m[K
+(B[m    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh                                                                        (B[m[39;49m[K
+(B[m    9 root      20   0       0      0      0 S  0.0  0.0   0:00.22 rcu_sched                                                                     (B[m[39;49m[K
+(B[m   10 root      rt   0       0      0      0 S  0.0  0.0   0:00.02 watchdog/0                                                                    (B[m[39;49m[K
+(B[m   12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs                                                                     (B[m[39;49m[K[H(B[mtop - 00:22:06 up 36 min,  1 user,  load average: 0.00, 0.01, 0.03(B[m[39;49m(B[m[39;49m[K
+Tasks:(B[m[39;49m[1m  92 (B[m[39;49mtotal,(B[m[39;49m[1m   1 (B[m[39;49mrunning,(B[m[39;49m[1m  91 (B[m[39;49msleeping,(B[m[39;49m[1m   0 (B[m[39;49mstopped,(B[m[39;49m[1m   0 (B[m[39;49mzombie(B[m[39;49m(B[m[39;49m[K
+%Cpu(s):(B[m[39;49m[1m  0.0 (B[m[39;49mus,(B[m[39;49m[1m  0.7 (B[m[39;49msy,(B[m[39;49m[1m  0.0 (B[m[39;49mni,(B[m[39;49m[1m 99.3 (B[m[39;49mid,(B[m[39;49m[1m  0.0 (B[m[39;49mwa,(B[m[39;49m[1m  0.0 (B[m[39;49mhi,(B[m[39;49m[1m  0.0 (B[m[39;49msi,(B[m[39;49m[1m  0.0 (B[m[39;49mst(B[m[39;49m(B[m[39;49m[K
+KiB Mem :(B[m[39;49m[1m   500076 (B[m[39;49mtotal,(B[m[39;49m[1m    16604 (B[m[39;49mfree,(B[m[39;49m[1m   225556 (B[m[39;49mused,(B[m[39;49m[1m   257916 (B[m[39;49mbuff/cache(B[m[39;49m(B[m[39;49m[K
+KiB Swap:(B[m[39;49m[1m  1572860 (B[m[39;49mtotal,(B[m[39;49m[1m  1572860 (B[m[39;49mfree,(B[m[39;49m[1m        0 (B[m[39;49mused.(B[m[39;49m[1m   234808 (B[m[39;49mavail Mem (B[m[39;49m(B[m[39;49m[K
+[K
+
+(B[m 3014 vagrant   20   0  672388  78052  18116 S  2.6 15.6   0:06.31 rsession                                                                      (B[m[39;49m[K
+(B[m[1m 3217 vagrant   20   0   57400   2108   1508 R  0.3  0.4   0:00.05 top                                                                           (B[m[39;49m[K
+(B[m    1 root      20   0  128168   6832   4064 S  0.0  1.4   0:00.90 systemd                                                                       (B[m[39;49m[K
+(B[m    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd                                                                      (B[m[39;49m[K
+(B[m    3 root      20   0       0      0      0 S  0.0  0.0   0:00.04 ksoftirqd/0                                                                   (B[m[39;49m[K
+(B[m    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H                                                                  (B[m[39;49m[K
+(B[m    6 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kworker/u2:0                                                                  (B[m[39;49m[K
+(B[m    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0                                                                   (B[m[39;49m[K
+(B[m    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh                                                                        (B[m[39;49m[K
+(B[m    9 root      20   0       0      0      0 S  0.0  0.0   0:00.22 rcu_sched                                                                     (B[m[39;49m[K
+(B[m   10 root      rt   0       0      0      0 S  0.0  0.0   0:00.02 watchdog/0                                                                    (B[m[39;49m[K
+(B[m   12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs                                                                     (B[m[39;49m[K
+(B[m   13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns                                                                         (B[m[39;49m[K[H(B[mtop - 00:22:09 up 36 min,  1 user,  load average: 0.00, 0.01, 0.03(B[m[39;49m(B[m[39;49m[K
+Tasks:(B[m[39;49m[1m  92 (B[m[39;49mtotal,(B[m[39;49m[1m   2 (B[m[39;49mrunning,(B[m[39;49m[1m  90 (B[m[39;49msleeping,(B[m[39;49m[1m   0 (B[m[39;49mstopped,(B[m[39;49m[1m   0 (B[m[39;49mzombie(B[m[39;49m(B[m[39;49m[K
+%Cpu(s):(B[m[39;49m[1m  0.3 (B[m[39;49mus,(B[m[39;49m[1m  0.0 (B[m[39;49msy,(B[m[39;49m[1m  0.0 (B[m[39;49mni,(B[m[39;49m[1m 99.7 (B[m[39;49mid,(B[m[39;49m[1m  0.0 (B[m[39;49mwa,(B[m[39;49m[1m  0.0 (B[m[39;49mhi,(B[m[39;49m[1m  0.0 (B[m[39;49msi,(B[m[39;49m[1m  0.0 (B[m[39;49mst(B[m[39;49m(B[m[39;49m[K
+KiB Mem :(B[m[39;49m[1m   500076 (B[m[39;49mtotal,(B[m[39;49m[1m    16604 (B[m[39;49mfree,(B[m[39;49m[1m   225564 (B[m[39;49mused,(B[m[39;49m[1m   257908 (B[m[39;49mbuff/cache(B[m[39;49m(B[m[39;49m[K
+
+[K
+
+(B[m 3014 vagrant   20   0  672388  78052  18116 S  2.3 15.6   0:06.38 rsession                                                                      (B[m[39;49m[K
+(B[m    1 root      20   0  128168   6832   4064 S  0.0  1.4   0:00.90 systemd                                                                       (B[m[39;49m[K
+(B[m    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd                                                                      (B[m[39;49m[K
+(B[m    3 root      20   0       0      0      0 S  0.0  0.0   0:00.04 ksoftirqd/0                                                                   (B[m[39;49m[K
+(B[m    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H                                                                  (B[m[39;49m[K
+(B[m    6 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kworker/u2:0                                                                  (B[m[39;49m[K
+(B[m    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0                                                                   (B[m[39;49m[K
+(B[m    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh                                                                        (B[m[39;49m[K
+(B[m    9 root      20   0       0      0      0 S  0.0  0.0   0:00.22 rcu_sched                                                                     (B[m[39;49m[K
+(B[m   10 root      rt   0       0      0      0 S  0.0  0.0   0:00.02 watchdog/0                                                                    (B[m[39;49m[K
+(B[m   12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs                                                                     (B[m[39;49m[K
+(B[m   13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns                                                                         (B[m[39;49m[K
+(B[m   14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd                                                                    (B[m[39;49m[K[H(B[mtop - 00:22:12 up 36 min,  1 user,  load average: 0.00, 0.01, 0.03(B[m[39;49m(B[m[39;49m[K
+
+%Cpu(s):(B[m[39;49m[1m  0.0 (B[m[39;49mus,(B[m[39;49m[1m  0.3 (B[m[39;49msy,(B[m[39;49m[1m  0.0 (B[m[39;49mni,(B[m[39;49m[1m 99.3 (B[m[39;49mid,(B[m[39;49m[1m  0.0 (B[m[39;49mwa,(B[m[39;49m[1m  0.0 (B[m[39;49mhi,(B[m[39;49m[1m  0.3 (B[m[39;49msi,(B[m[39;49m[1m  0.0 (B[m[39;49mst(B[m[39;49m(B[m[39;49m[K
+
+
+[K
+
+(B[m 3014 vagrant   20   0  672388  78052  18116 S  2.3 15.6   0:06.45 rsession                                                                      (B[m[39;49m[K
+(B[m[1m 3217 vagrant   20   0   57400   2108   1508 R  0.7  0.4   0:00.07 top                                                                           (B[m[39;49m[K
+(B[m    3 root      20   0       0      0      0 S  0.3  0.0   0:00.05 ksoftirqd/0                                                                   (B[m[39;49m[K
+(B[m    1 root      20   0  128168   6832   4064 S  0.0  1.4   0:00.90 systemd                                                                       (B[m[39;49m[K
+(B[m    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd                                                                      (B[m[39;49m[K
+(B[m    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H                                                                  (B[m[39;49m[K
+(B[m    6 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kworker/u2:0                                                                  (B[m[39;49m[K
+(B[m    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0                                                                   (B[m[39;49m[K
+(B[m    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh                                                                        (B[m[39;49m[K
+(B[m    9 root      20   0       0      0      0 S  0.0  0.0   0:00.22 rcu_sched                                                                     (B[m[39;49m[K
+(B[m   10 root      rt   0       0      0      0 S  0.0  0.0   0:00.02 watchdog/0                                                                    (B[m[39;49m[K
+(B[m   12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs                                                                     (B[m[39;49m[K
+(B[m   13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns                                                                         (B[m[39;49m[K[?1l>[21;1H
+[?12l[?25h[K]0;~/share/newbie[vagrant@localhost newbie]$ top ~[K|~[K grep knitr
+]0;~/share/newbie[?1034h[vagrant@localhost newbie]$ ls
+[0m[38;5;27mBackup[0m  [38;5;27mCss[0m    [38;5;27mnewbie[0m        newbie_workshop.html          newbie_workshop_poster.html  newbie_workshop.Rmd  [38;5;27mShell[0m
+[38;5;27mC[0m       [38;5;27mImage[0m  newbie.Rproj  [38;5;27mnewbie_workshop_poster_files[0m  newbie_workshop_poster.Rmd   [38;5;27mSed[0m
+]0;~/share/newbie[vagrant@localhost newbie]$ rm[K[Klsexit echo C8F424F && /usr/bin/env && echo 1B6DE6DB[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[2Pls[Krm Image/p
+pareto_graph.png         poster_background_image/ 
+[vagrant@localhost newbie]$ rm Image/pareto_graph.png 
+]0;~/share/newbie[vagrant@localhost newbie]$ ls
+[0m[38;5;27mBackup[0m  [38;5;27mCss[0m    [38;5;27mnewbie[0m        newbie_workshop.html          newbie_workshop_poster.html  newbie_workshop.Rmd  [38;5;27mShell[0m
+[38;5;27mC[0m       [38;5;27mImage[0m  newbie.Rproj  [38;5;27mnewbie_workshop_poster_files[0m  newbie_workshop_poster.Rmd   [38;5;27mSed[0m
+]0;~/share/newbie[vagrant@localhost newbie]$ touch Css/newbie_workshop
+newbie_workshop.css         newbie_workshop_poster.css  
+[vagrant@localhost newbie]$ touch Css/newbie_workshop_pages.css
+]0;~/share/newbie[?1034h[vagrant@localhost newbie]$ ls[K[Kcd Image/
+newbie_workshop_image/   poster_background_image/ 
+[vagrant@localhost newbie]$ cd Image/poster_background_image/
+]0;~/share/newbie/Image/poster_background_image[vagrant@localhost poster_background_image]$ ls
+[0m[38;5;13m1525487343459.jpg[0m
+]0;~/share/newbie/Image/poster_background_image[vagrant@localhost poster_background_image]$ mv 1525487343459.jpg hakodatge.jpg\[K[K[K[K[K[K[Ke.jpg
+]0;~/share/newbie/Image/poster_background_image[vagrant@localhost poster_background_image]$ ls
+[0m[38;5;13mhakodate.jpg[0m
+]0;~/share/newbie/Image/poster_background_image[?1034h[vagrant@localhost poster_background_image]$ ls
+[0m[38;5;13mhakodate.jpg[0m
+]0;~/share/newbie/Image/poster_background_image[vagrant@localhost poster_background_image]$ cd ../\\[K[K[K[K[K[K[K[Kcd ../[K[K[K[K ../
+]0;~/share/newbie/Image[vagrant@localhost Image]$ ls
+[0m[38;5;27mnewbie_workshop_image[0m  [38;5;27mposter_background_image[0m
+]0;~/share/newbie/Image[vagrant@localhost Image]$ c[Kmv ../bayes_and_lm_plot.png ./newbie_workshop_image/
+]0;~/share/newbie/Image[vagrant@localhost Image]$ ls newbie_workshop_image/
+[0m[38;5;13mbayes_and_lm_plot.png[0m  [38;5;13mguinea-pig-242520_1920.jpg[0m  [38;5;13mmtcars_tibble.png[0m  [38;5;13mpareto_graph.png[0m
+]0;~/share/newbie/Image[vagrant@localhost Image]$ ls
+[0m[38;5;27mnewbie_workshop_image[0m  [38;5;27mposter_background_image[0m
+]0;~/share/newbie/Image[vagrant@localhost Image]$ ls ../../
+[0m[38;5;27martofR[0m  [38;5;27mCardSystem[0m  [38;5;27mGarrett[0m           [38;5;27mLogFile[0m    [38;5;27mnewbie[0m        renritsu_2.R  [38;5;27mRforDataScience[0m      [38;5;27mtest[0m       test.Rmd
+[38;5;27mblog[0m    [38;5;27mcbt[0m         [38;5;27mjikogakusyukadai[0m  [38;5;27mmy_format[0m  [38;5;27mnewbie_hands[0m  renritsu.R    [38;5;27mshare_vagrant_shell[0m  test.html  [38;5;27mweb_issue[0m
+]0;~/share/newbie/Image[vagrant@localhost Image]$ ..[K[Kls ../
+[0m[38;5;27mBackup[0m                 [38;5;27mImage[0m                  newbie_workshop.html           newbie_workshop_poster.html  [38;5;27mSed[0m
+[38;5;13mbayes_and_lm_plot.png[0m  [38;5;27mnewbie[0m                 newbie_workshop_pages.html     newbie_workshop_poster.pdf   [38;5;27mShell[0m
+[38;5;27mC[0m                      newbie.Rproj           [38;5;13mnewbie_workshop_poster_01.jpg[0m  newbie_workshop_poster.Rmd   test_pareto_c.R
+[38;5;27mCss[0m                    [38;5;27mnewbie_workshop_files[0m  [38;5;27mnewbie_workshop_poster_files[0m   newbie_workshop.Rmd
+]0;~/share/newbie/Image[vagrant@localhost Image]$ rm ../[K[K[K./b[Ki[KIm[K[Knewbie_workshop_image/bayes_and_lm_plot.png 
+]0;~/share/newbie/Image[vagrant@localhost Image]$ mv ../bayes_and_lm_plot.png ls[K[K./newbie_workshop_image/
+]0;~/share/newbie/Image[vagrant@localhost Image]$  echo 35529D5C && /usr/bin/env && echo 13CACAE0[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmv ../bayes_and_lm_plot.png ./newbie_workshop_image/
+]0;~/share/newbie/Image[vagrant@localhost Image]$  echo 35529D5C && /usr/bin/env && echo 13CACAE0[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmv ../bayes_and_lm_plot.png ./newbie_workshop_image/
+]0;~/share/newbie/Image[vagrant@localhost Image]$ 

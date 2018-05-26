@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526807612908.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "3321C7D",
+    "lastKnownWriteTime" : 730275223775899506,
+    "last_content_update" : 1526807612908,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1A62D658",
+        "caption" : "gss_cat",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3Aforcats&obj=gss_cat&cache_key=1A62D658",
+        "displayedObservations" : 21483,
+        "environment" : "package:forcats",
+        "object" : "gss_cat",
+        "preview" : 0,
+        "totalObservations" : 21483,
+        "variables" : 9
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
