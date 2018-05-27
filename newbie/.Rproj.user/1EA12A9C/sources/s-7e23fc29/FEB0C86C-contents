@@ -1120,7 +1120,7 @@ res_pareto &lt;-<span class="st"> </span>res_pareto <span class="op">/</span><sp
 </ul></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">2</span>)
-<span class="co">#&gt; [1] 87 46</span></code></pre></div>
+<span class="co">#&gt; [1] 9 1</span></code></pre></div>
 </section><section class="slide level2">
 <h2>8.3.2.その他</h2>
 <table>
@@ -1180,12 +1180,12 @@ replace_abcde &lt;-<span class="st"> </span><span class="cf">function</span>(vec
 result &lt;-<span class="st"> </span><span class="kw">pareto_func</span>(vec1)
 result
 <span class="co">#&gt; $count</span>
-<span class="co">#&gt;    a    c    e    d    b </span>
-<span class="co">#&gt; 3280 2684 2009 1375  652 </span>
+<span class="co">#&gt;    a    b    d    e    c </span>
+<span class="co">#&gt; 3298 2621 2020 1376  685 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $density</span>
-<span class="co">#&gt;      a      c      e      d      b </span>
-<span class="co">#&gt; 0.3280 0.5964 0.7973 0.9348 1.0000</span></code></pre></div>
+<span class="co">#&gt;      a      b      d      e      c </span>
+<span class="co">#&gt; 0.3298 0.5919 0.7939 0.9315 1.0000</span></code></pre></div>
 </section><section class="slide level2">
 
 <ul>
@@ -1622,8 +1622,8 @@ bf
 <span class="co">#&gt; --------------</span>
 <span class="co">#&gt; [1] Supplement                          : 1.198757     ±0.01%</span>
 <span class="co">#&gt; [2] Dose                                : 4.983636e+12 ±0%</span>
-<span class="co">#&gt; [3] Supplement + Dose                   : 2.906434e+14 ±2.08%</span>
-<span class="co">#&gt; [4] Supplement + Dose + Supplement:Dose : 7.672112e+14 ±1.35%</span>
+<span class="co">#&gt; [3] Supplement + Dose                   : 2.779746e+14 ±1.17%</span>
+<span class="co">#&gt; [4] Supplement + Dose + Supplement:Dose : 7.746968e+14 ±2.39%</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Against denominator:</span>
 <span class="co">#&gt;   Intercept only </span>
@@ -1714,6 +1714,7 @@ ToothGrowth_lm_result &lt;-<span class="st"> </span><span class="kw">lm</span>(T
 <h2>参考資料</h2>
 <ul>
 <li><a href="https://www.oreilly.co.jp/books/9784873115795/">アート・オブ・Rプログラミング</a></li>
+<li><a href="http://r4ds.had.co.nz/">R for Data Science</a></li>
 </ul>
 </section></section>
     </div>
