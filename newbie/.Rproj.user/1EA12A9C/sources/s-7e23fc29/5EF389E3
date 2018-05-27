@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527387389782.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "5EF389E3",
+    "lastKnownWriteTime" : 3405628695399973189,
+    "last_content_update" : 1527387389782,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "B2D9A4FF",
+        "caption" : "birthwt",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=birthwt&cache_key=B2D9A4FF",
+        "displayedObservations" : 189,
+        "environment" : "",
+        "object" : "birthwt",
+        "preview" : 0,
+        "totalObservations" : 189,
+        "variables" : 10
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

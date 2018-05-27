@@ -9,6 +9,11 @@
   text-transform: none;
 }
 
+/* id=h2_alone */
+.reveal h2#h2_alone {
+  color: #000000;
+}
+
 /* all slides text-align adjust
 
 .reveal .slides section > section {

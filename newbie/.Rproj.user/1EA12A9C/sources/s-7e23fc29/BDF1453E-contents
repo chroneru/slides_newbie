@@ -600,7 +600,7 @@ list("count" = res_count, "density" = res_pareto)
 * `sort()`はならべかえ
 * `cumsum()`は累積和
 
-```{r}
+```{r cumsum_ex}
 cumsum( c(1, 2, 3, 4, 5))
 ```
 
@@ -751,7 +751,7 @@ knitr::include_graphics("Image/newbie_workshop_image/pareto_graph.png")
 
 * `ToothGrowth`というデータセットを使ってみる
 
-```{r}
+```{r ToothGrowth_data}
 head(ToothGrowth)
 class(ToothGrowth)
 ```
@@ -775,7 +775,7 @@ knitr::include_graphics("Image/newbie_workshop_image/guinea-pig-242520_1920.jpg"
 
 ## 10.1.2.tibble型の威力
 
-```{r}
+```{r ToothGrowth_2_tibble}
 ToothGrowth2 <- as_tibble(ToothGrowth)
 ToothGrowth2 %>% head(2) %>% knitr::kable()
 ToothGrowth2 %>% tail(2) %>% knitr::kable()
@@ -785,14 +785,14 @@ ToothGrowth2 %>% tail(2) %>% knitr::kable()
 
 * ここは参考ぐらいに
 
-```{r}
+```{r ToothGrowth2_names}
 names(ToothGrowth2) <- c("Tooth_length", "Supplement", "Dose")
 ToothGrowth2 %>% head() %>% knitr::kable()
 ```
 
 ## 10.1.4.散布図で様子見
 
-```{r , fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+```{r ToothGrowth2_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
 ToothGrowth2 %>% 
   ggplot(aes(Dose, Tooth_length, color = Supplement)) +
   geom_point()
@@ -802,7 +802,7 @@ ToothGrowth2 %>%
 
 * `lm()`を使う
 
-```{r}
+```{r ToothGrowth2_lm}
 ToothGrowth2_VC_lm <- lm(Tooth_length ~ Dose, data = ToothGrowth2 %>% filter(Supplement == "VC"))
 ToothGrowth2_OJ_lm <- lm(Tooth_length ~ Dose, data = ToothGrowth2 %>% filter(Supplement == "OJ"))
 ToothGrowth2_lm <- list(VC_lm = summary(ToothGrowth2_VC_lm), OJ_lm = summary(ToothGrowth2_OJ_lm))
@@ -816,7 +816,7 @@ ToothGrowth2_lm
 
 * 回帰直線のプロット
 
-```{r , fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+```{r ToothGrowth2_lm_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
 ToothGrowth2 %>% 
   group_by(Supplement) %>% 
   ggplot(aes(Dose, Tooth_length, color = Supplement)) +
@@ -841,7 +841,7 @@ ToothGrowth2 %>%
 
 * 要は線形回帰分析
 
-```{r}
+```{r ToothGrowth2_lm_MCMC}
 ToothGrowth2_VC_bayes_lm <- MCMCpack::MCMCregress(Tooth_length ~ Dose, ToothGrowth2 %>% filter(Supplement == "VC"), verbose = 10000)
 ToothGrowth2_OJ_bayes_lm <- MCMCpack::MCMCregress(Tooth_length ~ Dose, ToothGrowth2 %>% filter(Supplement == "OJ"), verbose = 10000)
 ToothGrowth2_bayes_lm <- list(VC_bayes_lm = summary(ToothGrowth2_VC_bayes_lm), OJ_bayes_lm = summary(ToothGrowth2_OJ_bayes_lm))
@@ -854,7 +854,7 @@ ToothGrowth2_bayes_lm
 
 ---
 
-```{r , fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", eval=FALSE}
+```{r ToothGrowth2_lm_MCMC_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", eval=FALSE}
 # Tooth_length = 3.312 + 11.703 * Dose
 # Tooth_length = 11.571 + 7.796 * Dose
 ToothGrowth2 %>% 
@@ -880,6 +880,8 @@ ToothGrowth2 %>%
   )
 ```
 
+
+
 ## 10.2.3.MCMCregress
 
 * `MCMCpack`パッケージを使う。
@@ -889,14 +891,135 @@ ToothGrowth2 %>%
 
 ---
 
-MCMC法による線形回帰の結果を通常の線形回帰分析と重ねあわせてみると
+MCMC法による線形回帰の結果を通常の線形回帰分析と重ねあわせてみると 
+
+* だいたいおなじ
+* あくまで目安
 
 
-```{r , fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
+```{r import_ToothGrowth2_lm_MCMC_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
 knitr::include_graphics("./Image/newbie_workshop_image/bayes_and_lm_plot.png")
 ```
 
 
+# 10.3.BayesFactor
+
+## 10.3.1.ベイズファクター
+
+* 尤度を比較する指標
+* 事後確率の比と事前確率の比の比
+    * すごいわかりづらい
+
+<br/>
+
+<h2 id="h2_alone">ある仮説のときにデータがこうなってるよね?<br/>
+これって別の仮説の時のデータだとしたらどっちいいんかな?ってこと</h2>
+
+## 10.3.2.anovaBF
+
+* `BayesFactor::anovaBF`
+    * 分散を解析する関数
+* factorじゃないと使えないらしい
+* 質的変数として扱えるならそうする
+    * Doseは比例尺度と考えられる(量的変数)
+    * 今回は順位尺度と見る
+
+```{r anovaBF_error, error=TRUE}
+bf <- BayesFactor::anovaBF(
+  Tooth_length ~ Dose,
+  data = ToothGrowth2
+  )
+```
+
+## 10.3.3.anovaBFの使用
+
+* 公式にのっとってデータを整理していく
+
+```{r anovaBF_2_factor}
+ToothGrowth2$Dose <- factor(ToothGrowth2$Dose)
+levels(ToothGrowth2$Dose) <- c("Low", "Medium", "High")
+```
+
+---
+
+```{r calc_anovaBF}
+bf <- BayesFactor::anovaBF(
+  Tooth_length ~ Supplement * Dose,
+  data = ToothGrowth2
+  )
+bf
+```
+
+---
+
+* 今回はplotが用意されているので`plot()`を使う
+
+```{r calc_anovaBF_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
+display_plot <- matrix(c(1, 0, 1, 0), 2, 2)
+layout(display_plot)
+plot(bf)
+plot(bf[3:4]/bf[2])
+```
+
+## 10.3.4.プロット結果
+
+* 見た感じ`Supplement`は関係なさそう
+* `Supplement + Dose + Supplement:Dose`で仮設を立てるのが最も良さそう
+
+というわけで`factor`を`numeric`にするんですが 
+少し失敗しました。笑 
+
+```{r ToothGrowth2_2_numeric}
+levels(ToothGrowth2$Dose) <- c(0.5, 1, 2)
+ToothGrowth2$Dose <- as.numeric(as.character(ToothGrowth2$Dose))
+str(ToothGrowth2$Dose)
+```
+
+## 10.3.5.ふたたび線形回帰分析
+
+* 手順は同じ
+
+```{r ToothGrowth_lm_result}
+# Tooth_length = b0 + b1*Supplement + b2*Dose + b3*Supplement*Dose
+ToothGrowth_lm_result <- lm(Tooth_length ~ Supplement * Dose, data = ToothGrowth2)
+summary(ToothGrowth_lm_result)
+```
+
+---
+
+* ggplotを使っていく
+
+```{r ToothGrowth_lm_result_table}
+ToothGrowth2 <- ToothGrowth2 %>% 
+  mutate(
+    Supplement_num = unclass(.$Supplement),
+    Supplement_Dose = Supplement_num * Dose,
+    Tooth_length_res = 11.550 - 8.255 * Supplement_num + 7.811 * Dose + 3.904 * Supplement_num * Dose
+  ) %>% knitr::kable()
+```
+
+---
+
+```{r ToothGrowth_lm_result_plot, eval=FALSE}
+  ggplot(aes(Supplement_Dose)) +
+  geom_point(aes(y = Tooth_length_res),position = "jitter", color = "#0000ff") +
+  geom_point(aes(y = Tooth_length), color = "#ff0000") +
+  geom_smooth(aes(y = Tooth_length_res), method = "lm", se = FALSE, show.legend = ) #+
+#  geom_smooth(aes(y = Tooth_length_res, group = Supplement, color = Supplement), method = "lm", se = FALSE)
+# あんまり意味なかった。
+```
+
+* `Supplement`でまとめてみたけどx軸と違うからやめた。
+
+---
+
+```{r import_ToothGrowth_lm_result_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
+knitr::include_graphics("./Image/newbie_workshop_image/ToothGrowth_lm_result_plot.png")
+```
+
+* プロットしてみた。
+* 95%信頼区間でのみ`b3 * Supplement * Dose`が棄却される。
+* イテレーションしたらもう少し違うかも。
 
 
 # さいごに
