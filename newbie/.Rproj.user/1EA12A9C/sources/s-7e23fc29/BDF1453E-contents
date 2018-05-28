@@ -988,36 +988,41 @@ summary(ToothGrowth_lm_result)
 ---
 
 * ggplotを使っていく
+* [見やすい方](newbie_workshop_pages.html#ToothGrowth_lm_result_table)
+
+
 
 ```{r ToothGrowth_lm_result_table}
 ToothGrowth2 <- ToothGrowth2 %>% 
   mutate(
     Supplement_num = unclass(.$Supplement),
-    Supplement_Dose = Supplement_num * Dose,
-    Tooth_length_res = 11.550 - 8.255 * Supplement_num + 7.811 * Dose + 3.904 * Supplement_num * Dose
-  ) %>% knitr::kable()
+    Tooth_length_res = predict(ToothGrowth_lm_result)
+  )
+ToothGrowth2 %>% knitr::kable()
 ```
 
 ---
 
-```{r ToothGrowth_lm_result_plot, eval=FALSE}
-  ggplot(aes(Supplement_Dose)) +
-  geom_point(aes(y = Tooth_length_res),position = "jitter", color = "#0000ff") +
-  geom_point(aes(y = Tooth_length), color = "#ff0000") +
-  geom_smooth(aes(y = Tooth_length_res), method = "lm", se = FALSE, show.legend = ) #+
-#  geom_smooth(aes(y = Tooth_length_res, group = Supplement, color = Supplement), method = "lm", se = FALSE)
-# あんまり意味なかった。
+```{r ToothGrowth_lm_result_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
+par(mfrow = c(2, 2))
+plot(ToothGrowth_lm_result)
 ```
 
-* `Supplement`でまとめてみたけどx軸と違うからやめた。
+* 残差が同じぐらいの広がり
+* 正規性が見て取れる
+* クックの距離が0.5を超えているようなので当てはまりもよさそう
 
 ---
 
-```{r import_ToothGrowth_lm_result_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", echo=FALSE}
-knitr::include_graphics("./Image/newbie_workshop_image/ToothGrowth_lm_result_plot.png")
+```{r ToothGrowth_lm_result_ggplot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+ToothGrowth2 %>% 
+  ggplot(aes(Dose, color = Supplement)) +
+  geom_point(aes(y = Tooth_length_res), position = position_jitter(width = 0.1, height = 1), color = "#0000ff") +
+  geom_point(aes(y = Tooth_length), position = position_jitter(width = 0.1))
 ```
 
-* プロットしてみた。
+---
+
 * 95%信頼区間でのみ`b3 * Supplement * Dose`が棄却される。
 * イテレーションしたらもう少し違うかも。
 
@@ -1031,6 +1036,15 @@ knitr::include_graphics("./Image/newbie_workshop_image/ToothGrowth_lm_result_plo
 ここでは触れなかったことの方が多いです。<br/>
 統計だけじゃない，Rを楽しみましょう！
 </p>
+
+# 付録
+
+## ToothGrowth
+
+```{r ToothGrowth_kable}
+ToothGrowth %>% knitr::kable()
+```
+
 
 ## 参考資料
 

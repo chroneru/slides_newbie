@@ -1120,7 +1120,7 @@ res_pareto &lt;-<span class="st"> </span>res_pareto <span class="op">/</span><sp
 </ul></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">2</span>)
-<span class="co">#&gt; [1] 9 1</span></code></pre></div>
+<span class="co">#&gt; [1] 50 85</span></code></pre></div>
 </section><section class="slide level2">
 <h2>8.3.2.その他</h2>
 <table>
@@ -1180,12 +1180,12 @@ replace_abcde &lt;-<span class="st"> </span><span class="cf">function</span>(vec
 result &lt;-<span class="st"> </span><span class="kw">pareto_func</span>(vec1)
 result
 <span class="co">#&gt; $count</span>
-<span class="co">#&gt;    a    b    d    e    c </span>
-<span class="co">#&gt; 3298 2621 2020 1376  685 </span>
+<span class="co">#&gt;    c    b    d    e    a </span>
+<span class="co">#&gt; 3335 2580 2046 1326  713 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $density</span>
-<span class="co">#&gt;      a      b      d      e      c </span>
-<span class="co">#&gt; 0.3298 0.5919 0.7939 0.9315 1.0000</span></code></pre></div>
+<span class="co">#&gt;      c      b      d      e      a </span>
+<span class="co">#&gt; 0.3335 0.5915 0.7961 0.9287 1.0000</span></code></pre></div>
 </section><section class="slide level2">
 
 <ul>
@@ -1622,8 +1622,8 @@ bf
 <span class="co">#&gt; --------------</span>
 <span class="co">#&gt; [1] Supplement                          : 1.198757     ±0.01%</span>
 <span class="co">#&gt; [2] Dose                                : 4.983636e+12 ±0%</span>
-<span class="co">#&gt; [3] Supplement + Dose                   : 2.779746e+14 ±1.17%</span>
-<span class="co">#&gt; [4] Supplement + Dose + Supplement:Dose : 7.746968e+14 ±2.39%</span>
+<span class="co">#&gt; [3] Supplement + Dose                   : 2.813049e+14 ±1.4%</span>
+<span class="co">#&gt; [4] Supplement + Dose + Supplement:Dose : 7.7762e+14   ±2.18%</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Against denominator:</span>
 <span class="co">#&gt;   Intercept only </span>
@@ -1678,29 +1678,465 @@ ToothGrowth_lm_result &lt;-<span class="st"> </span><span class="kw">lm</span>(T
 
 <ul>
 <li>ggplotを使っていく</li>
+<li><a href="newbie_workshop_pages.html#ToothGrowth_lm_result_table">見やすい方</a></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth2 &lt;-<span class="st"> </span>ToothGrowth2 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">Supplement_num =</span> <span class="kw">unclass</span>(.<span class="op">$</span>Supplement),
-    <span class="dt">Supplement_Dose =</span> Supplement_num <span class="op">*</span><span class="st"> </span>Dose,
-    <span class="dt">Tooth_length_res =</span> <span class="fl">11.550</span> <span class="op">-</span><span class="st"> </span><span class="fl">8.255</span> <span class="op">*</span><span class="st"> </span>Supplement_num <span class="op">+</span><span class="st"> </span><span class="fl">7.811</span> <span class="op">*</span><span class="st"> </span>Dose <span class="op">+</span><span class="st"> </span><span class="fl">3.904</span> <span class="op">*</span><span class="st"> </span>Supplement_num <span class="op">*</span><span class="st"> </span>Dose
-  ) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+    <span class="dt">Tooth_length_res =</span> <span class="kw">predict</span>(ToothGrowth_lm_result)
+  )
+ToothGrowth2 <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Tooth_length</th>
+<th style="text-align: left;">Supplement</th>
+<th style="text-align: right;">Dose</th>
+<th style="text-align: right;">Supplement_num</th>
+<th style="text-align: right;">Tooth_length_res</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.8</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6.4</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10.0</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7.0</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.152857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13.6</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18.8</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.010714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.6</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">33.9</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.7</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">29.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">26.726429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17.6</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.455714</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.6</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">25.8</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">27.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.361429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">25.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">24.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">24.8</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30.9</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">27.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">29.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27.172857</td>
+</tr>
+</tbody>
+</table>
 </section><section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">ggplot</span>(<span class="kw">aes</span>(Supplement_Dose)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Tooth_length_res),<span class="dt">position =</span> <span class="st">&quot;jitter&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;#0000ff&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Tooth_length), <span class="dt">color =</span> <span class="st">&quot;#ff0000&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Tooth_length_res), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">show.legend =</span> ) <span class="co">#+</span>
-<span class="co">#  geom_smooth(aes(y = Tooth_length_res, group = Supplement, color = Supplement), method = &quot;lm&quot;, se = FALSE)</span>
-<span class="co"># あんまり意味なかった。</span></code></pre></div>
+<p><img src="newbie_workshop_files/figure-revealjs/ToothGrowth_lm_result_plot-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <ul>
-<li><code>Supplement</code>でまとめてみたけどx軸と違うからやめた。</li>
+<li>残差が同じぐらいの広がり</li>
+<li>正規性が見て取れる</li>
+<li>クックの距離が0.5を超えているようなので当てはまりもよさそう</li>
 </ul>
 </section><section class="slide level2">
 
-<p><img src="Image/newbie_workshop_image/ToothGrowth_lm_result_plot.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth2 <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Dose, <span class="dt">color =</span> Supplement)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Tooth_length_res), <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">height =</span> <span class="dv">1</span>), <span class="dt">color =</span> <span class="st">&quot;#0000ff&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Tooth_length), <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>))</code></pre></div>
+<p><img src="newbie_workshop_files/figure-revealjs/ToothGrowth_lm_result_ggplot-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</section><section class="slide level2">
+
 <ul>
-<li>プロットしてみた。</li>
 <li>95%信頼区間でのみ<code>b3 * Supplement * Dose</code>が棄却される。</li>
 <li>イテレーションしたらもう少し違うかも。</li>
 </ul>
@@ -1710,6 +2146,321 @@ ToothGrowth_lm_result &lt;-<span class="st"> </span><span class="kw">lm</span>(T
 <p id="lastpage">
 今回は，他言語との連携をメインにRを紹介しました。<br/> ここでは触れなかったことの方が多いです。<br/> 統計だけじゃない，Rを楽しみましょう！
 </p>
+</section></section>
+<section><section class="titleslide slide level1"><h1>付録</h1></section><section id="toothgrowth" class="slide level2">
+<h2>ToothGrowth</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">len</th>
+<th style="text-align: left;">supp</th>
+<th style="text-align: right;">dose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.8</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6.4</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10.0</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7.0</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15.2</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13.6</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18.8</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.6</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">33.9</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.7</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.3</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">29.5</td>
+<td style="text-align: left;">VC</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17.6</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.7</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.6</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">25.8</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.2</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">27.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">25.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">24.5</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">24.8</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30.9</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">26.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">27.3</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">29.4</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23.0</td>
+<td style="text-align: left;">OJ</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+</tbody>
+</table>
 </section><section class="slide level2">
 <h2>参考資料</h2>
 <ul>
