@@ -1,0 +1,117 @@
+library(shiny)
+
+ui <- fluidPage(
+   
+  title = "test_reactivity_isolate",
+   
+   sidebarLayout(
+      sidebarPanel(
+        numericInput("iso_n",
+                     "numericInput",
+                     min = 0,
+                     max = 20,
+                     value = NA),
+        actionButton("go",
+                     "execute!")
+      ),
+      
+      mainPanel(
+        textOutput("iso_out")
+      )
+   )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+  
+  #----------reactiveは関数オブジェクトを生成する---------------
+#  res_n <- reactive({
+    #----戻り値------
+    #----input$iso_nだけでも可能---
+#    return(input$iso_n)
+#  })
+  
+  #----------isolateはreactivityを解除する--------------
+  #----------数値を変更しても反映されない---------------
+  #res_n <- isolate(input$iso_n)
+  
+  #----------eventReactiveでactionButtonを有効化--------
+  #res_n <- eventReactive(input$go,{return(input$iso_n)})
+  
+  #res_n <- eventReactive(input$go,{return(input$iso_n)})
+  #----------isolateを挟むとうまくいかない-------------
+  #res_n_iso <- isolate({return(res_n())})
+  
+  #----------一時的な変数を挟んでもreactiveな評価を要求されるためエラーが起きる---------
+  #temp_n <- res_n()
+  #res_n_iso <- isolate(temp_n)
+  
+  #----------関数表現をつかってみる---------------------
+  #res_n <- isolate({return(input$iso_n)})
+  
+  #----------reactiveValuesを使ってみる-----------------
+  #----------reactiveValuesは独自のクラス名-------------
+  #----------クラッシュする-----------------------------
+  #res_n <- reactiveValues()
+  #res_n$iso_n <- input$iso_n
+  
+  #----------observe------------------------------------
+  #----------リスト型表現を監視する---------------------
+  #res_n <- reactiveValues()
+  #observe( res_n$iso_n <- input$iso_n)
+  
+  #----------代入表現式を監視してみる-------------------
+  #----------エラー出る---------------------------------
+  #res_n <- reactiveValues()
+  #observe( res_n <- input$iso_n)
+  
+  #----------isolateを監視------------------------------
+  #----------隔離されて値は反映されない-----------------
+  res_n <- reactiveValues()
+  observe(isolate(res_n$iso_n <- input$iso_n))
+  
+  output$iso_out <-renderText({
+    #-----reactiveの場合は関数表現---------
+    # paste(res_n())
+    
+    #-----render*内でreactiveを使ってみる------
+    #-----エラーが出る------------------------
+    #paste(reactive({return(input$iso_n)}))
+    
+    #-----isolateは今回は関数ではない-----------
+    #paste(res_n)
+    
+    #-----isolateで関数表現---------------------
+    #paste(res_n())
+    
+    #-----actionButtonを追加してみる-------
+    #-----効果なし-------------------------
+    #if(input$go == 0) return()
+    
+    #paste(res_n)
+    
+    #--------render*内でisolateを使ってみる-------
+    #--------これも数値は反映されない-------------
+    #paste(isolate(input$iso_n))
+    
+    #--------直接input$iso_nを記述---------------
+    #paste(input$iso_n)
+    
+    #--------reactiveとisolateのチェック--------------
+    #paste(res_n_iso)
+    
+    #--------observeとreactiveValues--------------
+    #paste(res_n$iso_n)
+    
+    #--------observeで関数表現は失敗-------------
+    #paste(res_n())
+    
+    #--------observeでisolate--------------------
+    paste(res_n$iso_n)
+  })
+   
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+

@@ -1,9 +1,0 @@
-"0","bf <- BayesFactor::anovaBF(
-  Tooth_length ~ Dose,
-  data = ToothGrowth2
-  )
-"
-"2","data coerced from tibble to data frame"
-"2","Error in createDataTypes(formula, whichRandom, data, analysis = ""anova"") : 
-  anovaBF() cannot be used with nonfactor independent variables. Use lmBF(), regressionBF(), or generalTestBF() instead.
-"

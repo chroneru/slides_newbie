@@ -17,7 +17,11 @@ output:
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
-  fig.show = "hold"
+  fig.show = "hold",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "70%",
+  fig.align = "center"
 )
 #TRUEでprompt表示
 #knitr::opts_current$set(prompt=FALSE, eval = FALSE)
@@ -25,9 +29,11 @@ knitr::opts_chunk$set(
 #rmarkdown::render("newbie_workshop.Rmd", "html_document", "newbie_workshop_pages.html")
 
 library(tidyverse)
+library(DiagrammeR)
+library(leaflet)
 ```
 
-# 自己紹介
+# 1.自己紹介
 
 ---
 
@@ -39,16 +45,16 @@ library(tidyverse)
 
 </div>
 
-# 1.Rのインストール
+# 2.Rのインストール
 
-## 1.1.windows
+## windows
 
 * [Rのページ](https://www.r-project.org/)に行きます。
 * Mirrors からjapanのミラーサイトを選択してください。
 * Download R x.x.x for Windowsをクリックしてダウンロードして実行する。(x.x.xはバージョンです。)
 * 後はインストーラにしたがってください。
 
-## 1.2.mac
+## mac
 
 * homebrewでのインストールだとこんな感じ
 
@@ -57,7 +63,7 @@ brew tap homebrew/science
 brew install r
 ```
 
-## 1.3.linux
+## linux
 
 * 簡易的な方法を示します。
 * ubuntu
@@ -73,14 +79,14 @@ sudo yum install epel-release
 sudo yum --enablerepo=epel install R
 ```
 
-# 2.Rstudioのインストール
+# 3.Rstudioのインストール
 
-## 2.1.windows
+## windows
 
 * [Rstudio](https://www.rstudio.com)のページからダウンロード，インストールします。
 * 別に難しくない
 
-## 2.2.mac
+## mac
 
 * homebrewでのインストール
     * brew-cask必須！
@@ -89,7 +95,7 @@ sudo yum --enablerepo=epel install R
 brew cask install rstudio
 ```
 
-## 2.3.linux
+## linux
 
 * ubuntu
 
@@ -106,9 +112,9 @@ wget https://download2.rstudio.org/rstudio-server-rhel-1.1.442-x86_64.rpm
 sudo yum install rstudio-server-rhel-1.1.442-x86_64.rpm
 ```
 
-# 3.Rの演算子 {#operator}
+# 4.Rの演算子 {#operator}
 
-## 3.1.算術演算子
+## 算術演算子
 
 * ふつうの計算に使う
 
@@ -120,7 +126,7 @@ sudo yum install rstudio-server-rhel-1.1.442-x86_64.rpm
 |`/`     |`2 / 3` |`r 2/3`  |
 |`^`     |`2 ^ 3` |`r 2^3`   |
 
-## 3.2.代入演算子
+## 代入演算子
 
 * 代入に使う
 * `=` は非推奨，`<-` を使う
@@ -132,9 +138,9 @@ sudo yum install rstudio-server-rhel-1.1.442-x86_64.rpm
 |`<-`    |`a <- 3`|
 |`<<-`   |`a <<- 5`|
 
-# 4.データ型
+# 5.データ型
 
-## 4.1.ベクトル
+## ベクトル
 
 * Rではベクトルとして代入される。
 * 文字列は`""`でくくる。
@@ -189,7 +195,7 @@ quiz2
 
 `TRUE`は`1`に，`FALSE`は`0`になります。
 
-## 4.1.1.リサイクルルール
+## リサイクルルール
 
 * 小さいベクトルが，大きいベクトルにあわせて繰り返されます。
 * ベクトルの長さによって警告が出る
@@ -211,9 +217,9 @@ a * c
 
 
 
-## 4.1.2.ベクトルの要素を参照する
+## ベクトルの要素を参照する
 
-### ベクトルの要素は`[1]`からはじまる!
+<h3> ベクトルの要素は`[1]`からはじまる!</h3>
 
 * ベクトルの参照は線形代数と一緒
 * `[行番号,列番号]`で参照する!
@@ -241,7 +247,7 @@ a[1,2] <- tmp
 a
 ```
 
-## 4.2.NA
+## NA
 
 * `NA`はNot Available
   * なにかわからない値に使う
@@ -257,7 +263,7 @@ na_vec == NA
 na_vec != NA
 ```
 
-## 4.3.scanfみたいなのも用意されてる
+## scanfみたいなのも用意されてる
 
 * readline関数
 
@@ -286,9 +292,9 @@ quiz()
 
 
 
-# 5.他言語との連携
+# 6.他言語との連携
 
-# 5.1.C言語
+# 6.1.C言語
 
 ---
 
@@ -351,7 +357,7 @@ dyn.unload("./C/quiz_point.so")
          * R.h内部でRconfig.hが呼び出されるため
 
 
-## 5.1.1.Cのコードはめんどい {#Ccompile}
+## Cのコードはめんどい {#Ccompile}
 
 * 関数の戻り値は`void`にする。
 * 引数はポインタを使う。
@@ -359,7 +365,7 @@ dyn.unload("./C/quiz_point.so")
 * gccだと.soをつくれてしまう
 * Rバッチだとエラーの特定がしづらい
 
-## 5.1.2.Rからロード {#C2R}
+## Rからロード {#C2R}
 
 * 形式は，`.so`か`.dll`
 * `dyn.load(`"hoge.so"`)`で読み込む
@@ -369,9 +375,9 @@ dyn.unload("./C/quiz_point.so")
 * `.C('関数名',引数)`か`.Call()`を使う
 * RにはC用のデータ型が用意されている
 
-# 5.2.シェルスクリプト
+# 6.2.シェルスクリプト
 
-## 5.2.1.シェルスクリプト {#shellscript}
+## シェルスクリプト {#shellscript}
 
 * シェルでも再現してみる。
 * これはけっこう素直に扱える。
@@ -406,14 +412,15 @@ cat(diagnosis[ (ans_u == "さくらんぼ") + 1 ])
 ```bash
 chmod u+x quiz_sh.sh
 ```
-## 5.2.2.commandArgs()
+
+## commandArgs()
 
 * `trailingOnly = TRUE`を指定する。
     * `FALSE`だとコマンドとオプションも渡される。
 * Rコマンドのオプションに`--args`を指定する。
 * 引数を複数わたすこともできる。
 
-## 5.2.3.shebang
+## shebang
 
 * シバンを変えることで`.R`スクリプトを直接実行できる。
 
@@ -433,7 +440,7 @@ quiz()
 chmod u+x ファイル名
 ```
 
-## 5.2.4.ヒアドキュメント {#program_with_heredoc}
+## ヒアドキュメント {#program_with_heredoc}
 
 * シェルのヒアドキュメントも使える
 
@@ -446,12 +453,10 @@ quiz <- function() {
   else print("まちがってるよ")
 }
 quiz()
-EOF
+\EOF
 ```
 
-```
-
-# 5.3.他にも使える言語
+# 6.3.他にも使える言語 {#other_languages}
 
 ---
 
@@ -464,11 +469,11 @@ EOF
 
 などなどいろいろ用意されている。
 
-# 6.パッケージ
+# 7.パッケージ
 
-## 6.1.1.パッケージとは
+## パッケージとは
 
-### いろんな人がつくった便利な関数群
+<h3>いろんな人がつくった便利な関数群</h3>
 
 * `install.packages()`でインストール
 * `library()`で読み込み
@@ -481,7 +486,7 @@ library(パッケージ名)
 detach("package:パッケージ名", unload = TRUE)
 ```
 
-## 6.1.2.ヒアドキュメント {#install_with_heredoc}
+## ヒアドキュメント {#install_with_heredoc}
 
 * ヒアドキュメントでログをとる。
 * インストール失敗時にべんり!
@@ -490,12 +495,10 @@ detach("package:パッケージ名", unload = TRUE)
 ```bash
 R --no-save << EOF > logfile 2>&1
 install.packages("パッケージ名")
-EOF
+\EOF
 ```
 
-```
-
-## 6.2.tidyverse群
+## tidyverse群
 
 * よくつかわれるパッケージをまとめたもの
 * データ処理につかう
@@ -512,7 +515,7 @@ library(tidyverse)
 * インストール時につまづきやすい
 * エラーを読むと解決する
 
-## 6.3.tidyverseの実践 {#tidy_example}
+## tidyverseの実践 {#tidy_example}
 
 * ggplotについての例を示す
 * tidyverseパッケージが必要
@@ -523,7 +526,7 @@ library(tidyverse)
 ```
 
 
-## 6.3.1.ggplot
+## ggplot
 
 * グラフをつくる関数
 * レイヤーを重ねる
@@ -555,17 +558,17 @@ ggplot(
 
 ![mtcars_tibble](Image/newbie_workshop_image/mtcars_tibble.png)
 
-# 7.関数
+# 8.関数
 
-## 7.1.function()
+## function()
 
 * `function()`をつかう。
 * ()のなかに引数をあたえる。
 * 中のプログラムは`{}`でくくる。
 
-## 7.2.関数例:パレート図の統計量
+## 関数例:パレート図の統計量
 
-### あんまりよくない
+<h3> あんまりよくない</h3>
 
 * 個数を数える
 * 大きいものからならべる(desc)
@@ -604,9 +607,9 @@ list("count" = res_count, "density" = res_pareto)
 cumsum( c(1, 2, 3, 4, 5))
 ```
 
-# 8.データ
+# 9.データ
 
-## 8.1.1.read.csv
+## read.csv
 
 * 標準で使える読み込み関数
 * `stringAsFactors = FALSE`にする
@@ -616,7 +619,7 @@ cumsum( c(1, 2, 3, 4, 5))
 read.csv("ファイル名", stringAsFactors = FALSE)
 ```
 
-## 8.1.2.read_csv
+## read_csv
 
 * tidyverse群に用意されてる関数(readr)
 
@@ -627,13 +630,13 @@ read_csv(
 )
 ```
 
-## 8.2.write.csv
+## write.csv
 
 * 標準のcsv作成関数
 * `row.names = FALSE`
     * 行名が追加されるのを防ぐ
 
-## 8.3.サンプルデータの作成
+## サンプルデータの作成
 
 * Rにはさまざまなデータ作成関数がある
 * `sample()`
@@ -641,7 +644,7 @@ read_csv(
 * `rnorm()`
 * `rgamma()`
 
-## 8.3.1.sample
+## sample
 
 * `sample()`で単純なデータを作成できる
 * `size`は何個とりだすか
@@ -653,7 +656,7 @@ read_csv(
 sample(1:100, size = 2)
 ```
 
-## 8.3.2.その他
+## その他
 
 |  関数   | 確率分布 |   使い方   |
 |:-------:|:--------:|:-----------:
@@ -665,9 +668,9 @@ sample(1:100, size = 2)
 * shapeはk, rateはシータ
 * shape1はα, shape2はβ
 
-# 9.使用例
+# 10.使用例
 
-## 9.1.パレート図 {#pareto_graph}
+## パレート図 {#pareto_graph}
 
 ```{r pareto_play}
 prob_vec <- sample(1:5, size = 5)
@@ -745,9 +748,9 @@ result %>%
 knitr::include_graphics("Image/newbie_workshop_image/pareto_graph.png")
 ```
 
-# 10.統計処理
+# 11.統計処理
 
-## 10.1.とりあえずやってみる。
+## とりあえずやってみる。
 
 * `ToothGrowth`というデータセットを使ってみる
 
@@ -766,14 +769,14 @@ knitr::include_graphics("Image/newbie_workshop_image/guinea-pig-242520_1920.jpg"
 ```
 
 
-## 10.1.1.方針
+## 方針
 
 1. tidyverse群がつかえるようにtibbleにする。
 1. 列名をわかりやすくする
 1. とりあえず散布図を作る
 1. 他の処理について考える 
 
-## 10.1.2.tibble型の威力
+## tibble型の威力
 
 ```{r ToothGrowth_2_tibble}
 ToothGrowth2 <- as_tibble(ToothGrowth)
@@ -781,7 +784,7 @@ ToothGrowth2 %>% head(2) %>% knitr::kable()
 ToothGrowth2 %>% tail(2) %>% knitr::kable()
 ```
 
-## 10.1.3.列名を変更する
+## 列名を変更する
 
 * ここは参考ぐらいに
 
@@ -790,7 +793,7 @@ names(ToothGrowth2) <- c("Tooth_length", "Supplement", "Dose")
 ToothGrowth2 %>% head() %>% knitr::kable()
 ```
 
-## 10.1.4.散布図で様子見
+## 散布図で様子見
 
 ```{r ToothGrowth2_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
 ToothGrowth2 %>% 
@@ -798,7 +801,7 @@ ToothGrowth2 %>%
   geom_point()
 ```
 
-## 10.1.5.線形回帰分析
+## 線形回帰分析
 
 * `lm()`を使う
 
@@ -806,7 +809,8 @@ ToothGrowth2 %>%
 ToothGrowth2_VC_lm <- lm(Tooth_length ~ Dose, data = ToothGrowth2 %>% filter(Supplement == "VC"))
 ToothGrowth2_OJ_lm <- lm(Tooth_length ~ Dose, data = ToothGrowth2 %>% filter(Supplement == "OJ"))
 ToothGrowth2_lm <- list(VC_lm = summary(ToothGrowth2_VC_lm), OJ_lm = summary(ToothGrowth2_OJ_lm))
-ToothGrowth2_lm
+ToothGrowth2_lm$VC_lm$coefficients; ToothGrowth2_lm$OJ_lm$coefficients
+ToothGrowth2_lm$VC_lm$coefficients; ToothGrowth2_lm$VC_lm$coefficients
 
 # Tooth_length = 3.295 + 11.716 * Dose
 # Tooth_length = 11.550 + 7.811 * Dose
@@ -825,9 +829,9 @@ ToothGrowth2 %>%
 ```
 
 
-# 10.2.ベイズ
+# 12.ベイズ
 
-## 10.2.1.ベイズ統計
+## ベイズ統計
 
 * ToothGrowthでは母集団が少ない。
 * なにもしていない時の歯の増加量がわからない。
@@ -837,7 +841,7 @@ ToothGrowth2 %>%
 
 <h2>そんなときはベイズ</h2>
 
-## 10.2.2.baysian linear regression
+## baysian linear regression
 
 * 要は線形回帰分析
 
@@ -846,24 +850,30 @@ ToothGrowth2_VC_bayes_lm <- MCMCpack::MCMCregress(Tooth_length ~ Dose, ToothGrow
 ToothGrowth2_OJ_bayes_lm <- MCMCpack::MCMCregress(Tooth_length ~ Dose, ToothGrowth2 %>% filter(Supplement == "OJ"), verbose = 10000)
 ToothGrowth2_bayes_lm <- list(VC_bayes_lm = summary(ToothGrowth2_VC_bayes_lm), OJ_bayes_lm = summary(ToothGrowth2_OJ_bayes_lm))
 ToothGrowth2_bayes_lm
+```
 
-# 試行によって違いが出る。
-# Tooth_length = 3.312 + 11.703 * Dose
-# Tooth_length = 11.571 + 7.796 * Dose
+---
+
+```{r}
+Intercept <- c(ToothGrowth2_bayes_lm$VC_bayes_lm$statistics[1,1],
+                ToothGrowth2_bayes_lm$OJ_bayes_lm$statistics[1,1])
+slope <- c(ToothGrowth2_bayes_lm$VC_bayes_lm$statistics[2,1],
+                ToothGrowth2_bayes_lm$OJ_bayes_lm$statistics[2,1])
+Intercept; slope
+
 ```
 
 ---
 
 ```{r ToothGrowth2_lm_MCMC_plot, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center", eval=FALSE}
-# Tooth_length = 3.312 + 11.703 * Dose
-# Tooth_length = 11.571 + 7.796 * Dose
+
 ToothGrowth2 %>% 
   group_by(Supplement) %>% 
   ggplot(aes(Dose, Tooth_length, color = Supplement)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, size = 2) +
   stat_function(
-    fun = function(Dose) 3.312 + 11.703 * Dose,
+    fun = function(Dose)  Intercept[1] + slope[1] * Dose,
     geom = "line",
     color = "#00ffc4",
     size = 0.6,
@@ -871,7 +881,7 @@ ToothGrowth2 %>%
     show.legend = TRUE
   ) +
   stat_function(
-    fun = function(Dose) 11.571 + 7.796 * Dose,
+    fun = function(Dose) Intercept[2] + slope[2] * Dose,
     geom = "line",
     color = "#ffe4f1",
     size = 0.5,
@@ -882,7 +892,7 @@ ToothGrowth2 %>%
 
 
 
-## 10.2.3.MCMCregress
+## MCMCregress
 
 * `MCMCpack`パッケージを使う。
 * `MCMCpack::MCMCregress`でMCMC法での回帰直線を作成する。
@@ -902,9 +912,9 @@ knitr::include_graphics("./Image/newbie_workshop_image/bayes_and_lm_plot.png")
 ```
 
 
-# 10.3.BayesFactor
+# 13.BayesFactor
 
-## 10.3.1.ベイズファクター
+## ベイズファクター
 
 * 尤度を比較する指標
 * 事後確率の比と事前確率の比の比
@@ -915,7 +925,7 @@ knitr::include_graphics("./Image/newbie_workshop_image/bayes_and_lm_plot.png")
 <h2 id="h2_alone">ある仮説のときにデータがこうなってるよね?<br/>
 これって別の仮説の時のデータだとしたらどっちいいんかな?ってこと</h2>
 
-## 10.3.2.anovaBF
+## anovaBF
 
 * `BayesFactor::anovaBF`
     * 分散を解析する関数
@@ -931,7 +941,7 @@ bf <- BayesFactor::anovaBF(
   )
 ```
 
-## 10.3.3.anovaBFの使用
+## anovaBFの使用
 
 * 公式にのっとってデータを整理していく
 
@@ -961,7 +971,7 @@ plot(bf)
 plot(bf[3:4]/bf[2])
 ```
 
-## 10.3.4.プロット結果
+## プロット結果
 
 * 見た感じ`Supplement`は関係なさそう
 * `Supplement + Dose + Supplement:Dose`で仮設を立てるのが最も良さそう
@@ -975,7 +985,7 @@ ToothGrowth2$Dose <- as.numeric(as.character(ToothGrowth2$Dose))
 str(ToothGrowth2$Dose)
 ```
 
-## 10.3.5.ふたたび線形回帰分析
+## ふたたび線形回帰分析
 
 * 手順は同じ
 
@@ -998,7 +1008,7 @@ ToothGrowth2 <- ToothGrowth2 %>%
     Supplement_num = unclass(.$Supplement),
     Tooth_length_res = predict(ToothGrowth_lm_result)
   )
-ToothGrowth2 %>% knitr::kable()
+ToothGrowth2 %>% head() %>% knitr::kable()
 ```
 
 ---
@@ -1026,6 +1036,1501 @@ ToothGrowth2 %>%
 * 95%信頼区間でのみ`b3 * Supplement * Dose`が棄却される。
 * イテレーションしたらもう少し違うかも。
 
+# 14.rmarkdown
+
+## rmarkdownの準備
+
+* File > New File > R markdown > Document HTML(ラジオボタン) > OK
+* はじめてrmdファイルを作ろうとするとエラーが出る
+* とりあえず，インストールしてください。
+
+```{r , eval=FALSE}
+install.packages(c("bitops", "caTools"))
+```
+
+## yamlヘッダ
+
+* 出力するファイルのオプションを設定
+
+<pre>
+---
+title: "たいとる"
+author: "書いた人"
+date: "日付"
+output: 出力形式: 
+    css: "cssのパス"
+    self_contained: TRUEかFALSE
+---
+</pre>
+
+## 出力形式
+
+|指定方法|出力形式|
+|:------:|:------:|
+|html_document|html|
+|pdf_document|pdf|
+|word_document|word|
+|ioslides_presentation|htmlのスライド|
+|revealjs::revealjs_presentation|イケてるスライド|
+|bookdown::gitbook|本|
+
+* 他にもいろいろな出力形式がある。
+* pdfはlatexをつかうので、ハマる。
+
+---
+
+```{r install_revealjs, eval=FALSE}
+#CRANから
+install.packages("revealjs")
+
+#githubから
+install.packages("devtools")
+install_github("rstudio/revealjs")
+```
+
+```{r install_bookdown, eval=FALSE}
+install.packages("bookdown")
+```
+
+## pdfの出力
+
+* pdfを出力するとエラーが出る
+* texライブラリが足りないみたい
+
+<pre>
+output: pdf_document
+    
+Ctrl + Shift + K (knit)
+</pre>
+
+## texのログファイル
+
+* pdfをレンダリングするとログが出るので読む
+    * 大事なところだけでいい
+
+<pre>
+! LaTeX Error: File `titling.sty' not found.
+!  ==> Fatal error occurred, no output PDF file produced!
+</pre>
+
+* `titling.sty`がないということ
+
+## texライブラリ
+
+* texライブラリを追加すればOK
+
+```bash
+wget ftp://ftp.jaist.ac.jp/pub/CTAN/macros/latex/contrib/titling.zip
+unzip titling.zip
+cd titling.zip
+latex titling.ins
+sudo cp titling.sty /usr/share/texlive/texmf-dist/tex/latex/titling/
+sudo texhash
+```
+
+* 必要ないかもだけど一応
+
+<pre>
+# You are recommended to install the tinytex package to build PDF.FALSE
+On Rstudio
+install.packages("tinytex")
+</pre>
+
+# 15.コードチャンク
+
+## コードチャンクの書き方
+
+* 先頭の\\はエスケープです。
+* 取り除いてください。
+
+<pre>
+\```{r}
+\Rのコード 
+\``` 
+</pre>
+
+* `Ctrl + Alt + I` でチャンクを追加できる
+
+## チャンクオプション
+
+* `{r チャンク名, オプションの指定}`
+
+|オプション|T, F| 結果 |
+|:--------:|:--:|:----:|
+|include   |FALSE|コードと結果を表示しない|
+|echo      |FALSE|コードを表示しない|
+|message   |FALSE|メッセージを表示しない|
+|eval      |FALSE|実行しない|
+
+* ほかにもいろいろある
+* オプションのチェック方法
+    * `knitr::opts_chunk$get`
+
+## setupチャンク
+
+* `{r setup, include = FALSE}`
+* setupのチャンクは一度しか使えない。
+* `include = FALSE`がよく使う指定。
+    * コードチャンクを表示しない
+
+---
+
+* 今回は次のように設定してある。
+* bookdownは違う設定をしてある。
+
+<pre>
+\```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  fig.show = "hold"
+)
+\```
+</pre>
+
+## エンジン
+
+* `{r チャンク名, engine="言語名"}`
+* ````言語名:チャンク名`
+* `{言語名 チャンク名, オプション}`
+
+[他言語](#other_languages) に書いた言語以外にもいろいろ使える。
+
+## tex数式 {#tex_math}
+
+* インラインは`$数式$`
+* ブロックラインは`$$数式$$`
+
+たとえば,$E=mc^2$, $mgh=\frac{1}{2}mv^2$
+
+$$E=mc^2$$
+$$mgh=\frac{1}{2}mv^2$$
+
+## texコマンド {#tex_command}
+
+* コマンドは\\をつける
+
+|コマンド|効果|
+|:-------:|:--------:|
+|`\text`  | 演算子など記号を文字にする |
+|`{\rm }` | 文字がイタリックになるのをやめる|
+|`_{}`    | 下付き文字 |
+|`^{}`    | 上付き文字 |
+|`\theta` |$\theta$ギリシャ文字(ほかにも使えます)|
+|`\frac{a}{b}`|$\frac{a}{b}$の分数をつくる|
+|`\int_a^b`|$\int_a^b$こんな感じの積分を作る|
+
+
+# 16.shiny
+
+## shinyってなんぞ
+
+* Rでwebアプリを作れるやつ
+* shinyパッケージをインストールする
+* ここ数年で仕様が変化している模様
+    * ui.Rとserver.Rからapp.Rに
+* shinyサーバーをインストールして構築するのは難易度高め
+* shinyserverproを使うとユーザー認証ができたりする。
+
+* ここからは`eval=FALSE`にしてある
+    * shinyのある環境でお試しください。
+
+---
+
+* 簡単に書いてみると
+
+```{r , eval=FALSE}
+ui <- fluidPage(
+  titlePanel("たいとる"),
+  mainPanel(),
+  sidebarPanel()
+)
+
+server <- function(input, output) {
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+* ui.Rでの場合
+    * `shinyUI()`でui設定を`{}`でくくって記述
+* server.Rでの場合
+    * `shinyServer()`でserver設定を`function(input,output){}`の関数内で記述
+* app.Rでの場合
+    * `ui`,`server`オブジェクトを定義
+    * `shinyApp(ui = ui, server = server)`でアプリ起動
+
+
+## widget
+
+* さっきのはシンプルな形
+* 入力フォームや出力などのウィジェットを定義する。
+
+```{r Input_check}
+ls(envir = environment(shiny::numericInput)) %>% 
+  # ..*で任意の一文字以上, (Input|Output)でInputまたはOutput, $は行末のアンカー
+  str_subset("..*(Input|Output)$") 
+```
+
+---
+
+```{r , eval=FALSE}
+
+ui <- fluidPage(
+  titlePanel("numericInput&sliderInput"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  textOutput("test_text")
+)
+
+server <- function(input, output) {
+  output$test_text <- renderText({
+    paste0("入力した数字は,", input$test_num, "スライダーの数字は,", input$test_slide)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+* `output$id名`に出力を代入する。
+
+---
+
+* render系の関数は出力時に使う。
+
+```{r}
+ls(envir = environment(shiny::renderText)) %>% 
+  str_subset(".*render.*")
+```
+
+
+    
+## reactive
+
+<h3>いままでやったのはreactivityとは少し違う。</h3>
+
+* `render*`はinputの値が変わるたびに、再実行する。
+* つまり、不要な更新も行われるということ。
+* さっきの例だと
+    * `numericInput`の値しか変わらないのに`sliderInput`の値を再代入してしまう。
+
+<h3>`reactive()`を使おう!</h3>
+
+## reactiveを使ってみる。
+
+```{r test_reactive, eval=FALSE}
+ui <- fluidPage(
+  titlePanel("numericInput&sliderInput"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  textOutput("test_text")
+)
+
+server <- function(input, output) {
+  reactive_test_num <- reactive(list(input$test_num, input$test_slide))
+  output$test_text <- renderText({
+    paste0("入力した数字は,", reactive_test_num()[[1]], "スライダーの数字は,", reactive_test_num()[[2]])
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+* `reactive`は関数オブジェクトの形をとる。
+* `[[]]`でのアクセスは、ベクトルを返させる。
+
+---
+
+* `reactive`の関数は、`{}`でくくると複数行の表現式を受け取れる。
+* `reactive`は、メモリ中の`input`変数が変わったら、再実行される。
+    * 変わらなければ再代入されない。
+* なんども関数を実行することは速度の低下につながる。
+
+## observer
+
+* `observe`は常に`input`を監視する。
+* 挙動は`reactive`と同じ。
+
+```{r , eval=FALSE}
+ui <- fluidPage(
+  titlePanel("numericInput&sliderInput"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  textOutput("test_text")
+)
+
+server <- function(input, output) {
+  #observe(list(input$test_num, input$test_slide))
+  observe_test <- reactiveValues()
+  observe({observe_test$num <- input$test_num; observe_test$slide <- input$test_slide})
+  output$test_text <- renderText({
+    paste0("入力した数字は,",
+           #input$test_num,
+           observe_test$num,
+           "スライダーの数字は,",
+           #input$test_slide
+           observe_test$slide)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+* `observe()`は,`reactive`と決定的に違う。
+* `input`が変わらなくても、`observe`内の関数を再実行する。
+    * `render*`内の関数を外に押し出すのにいいかも。
+
+
+
+## endpoint
+
+* `render*`の関数
+
+```{r  fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+mermaid("
+        graph LR
+          id1[reactive]
+          id2{observer}
+          id3>endpoint]
+        
+          id1---id2
+          id2---id3")
+```
+
+---
+
+* イメージとしてはこんな感じ
+* 最後に`render*`で`output`にわたす
+    * `renderText()`をさっき使った
+* `mermaid()`は後述
+
+
+```{r test_render_table, eval=FALSE}
+ui <- fluidPage(
+  titlePanel("numericInput&sliderInput"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  dataTableOutput("test_table")
+)
+
+server <- function(input, output) {
+  check_var <- reactive(data.frame(num = input$test_num, slide = input$test_slide))
+  observe({table_1 <- as.data.frame(check_var())})
+  output$test_table <- renderDataTable({as.data.frame(check_var())})
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+* `renderDataTable()`はdata.frameとmatrixを出力
+* `renderTable()`は`xtable::xtable`を使うので注意！
+* 詳しくは`?shiny::renderDataTable`
+
+<h3>基本的には, reactive, endpoint, がわかればOK!</h3>
+
+# 17.shinyのレイアウト
+
+## \*Panel
+
+* 基本的には`*Panel`で書けばいい。
+* `sidebarLayout()`も簡単
+
+```{r ls_Panel}
+ls(envir = environment(shiny::titlePanel)) %>% 
+  str_subset(".*Panel$")
+```
+
+
+## fluidRow
+
+* `fluidRow()`の中に`column(width, )`でレイアウトしていく
+    * いままで使ってたやつ
+* `column(width, )`のwidthは,同一の`fluidRow()`内で合計12になるようにする。
+    * 2つに等分するなら`width = 6`
+    * 3等分なら`width = 4`
+    * 自由に、`width = 2`, `width = 4` , `width = 6`もOK
+
+## css
+
+1. app.R, ui.R, server.Rのあるところにcssを置く
+1. `shiny::includeCSS()`でcssファイルを指定する。(パス無し)
+
+1. `www`ディレクトリをapp.R, ui.R, server.Rのあるところに作る
+1. `www`内にcssファイルを置く
+1. `fluidPage(theme = "css", )`で指定する。
+1. `tags$head()`内の`tags$link()`で設定する
+
+* `tags$head()`内の`tags$style()`で直接スタイルを書く
+
+---
+
+```{r test_shiny_css, eval=FALSE}
+ui <- fluidPage(
+  #失敗,たぶんリポジトリのディレクトリ構造が干渉してる
+  # theme = "shiny_css/test_shiny_css.css",
+  #失敗,たぶん上と同じ理由
+    # tags$head(
+    #   tags$link(rel = "stylesheet", type = "text/css", href = "shiny_css/test_shiny_css.css")
+    # ),
+  #これはうまくいく。パスはRmd起点にしてある。
+  #includeCSS("www/shiny_css/test_shiny_css.css"),
+  
+  headerPanel("numericInput&sliderInput"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  dataTableOutput("test_table")
+)
+
+server <- function(input, output) {
+  check_var <- reactive(data.frame(num = input$test_num, slide = input$test_slide))
+  observe({table_1 <- as.data.frame(check_var())})
+  output$test_table <- renderDataTable({as.data.frame(check_var())})
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+* ちょー見づらいけど、テストだからわかりやすく。
+
+## googleapi
+
+* googleapiのcssを`@import`する
+* 日本語は開発中らしい
+* earlyaccessでcssを読み込める
+
+```{r import_font_css, eval=FALSE}
+ui <- fluidPage(
+  tags$head(
+    tags$style(HTML("
+/*
+                    @import url(//fonts.googleapis.com/earlyaccess/nicomoji.css);
+                    h1, h2, h3, h4, h5, h6, p {
+                      font-family: 'Nico Moji', cursive;
+                    }
+*/
+
+/*
+                    @import url(//fonts.googleapis.com/earlyaccess/hannari.css);
+                    h1, h2, h3, h4, h5, h6, p {
+                      font-family: 'Hannari', serif;
+                    }
+*/
+                    "))
+  ),
+  
+  headerPanel("数字の入力練習"),
+  fluidRow(
+    column(6,
+           numericInput("test_num", "数字を入力してね", value = NA, min = 0, max = 20)),
+    column(6,
+            sliderInput("test_slide", "スライドしよう", min = 0, max = 100, value = 20))
+  ),
+  dataTableOutput("test_table")
+)
+
+server <- function(input, output) {
+  check_var <- reactive(data.frame(num = input$test_num, slide = input$test_slide))
+  observe({table_1 <- as.data.frame(check_var())})
+  output$test_table <- renderDataTable({as.data.frame(check_var())})
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+
+
+
+# 18.htmlwidgets
+
+## htmlwidgetsとは
+
+* javascriptをつかってRをインタラクティブにしようってこと
+* html系ならなんでも組み合わせられる
+* ただし、相互干渉の可能性あり
+* (いっぱいあります)[http://gallery.htmlwidgets.org/]
+    * 今回は`leaflet`と`DiagrammeR`を紹介
+    * 主に`DiagrammeR`
+
+## leaflet
+
+* いけいけなマップを生成する。
+
+```{r  process_leaflet, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+# ダブルクウォーテーションを使う
+mermaid('
+        graph LR
+        first["leaflet()"]
+        second["addTiles()"]
+        last[他の情報]
+        
+        first --> second
+        second --> last')
+```
+
+---
+
+
+```{r Hakodate_ShinHakodate}
+
+map_df <- data.frame(
+  popup = c("はこだて", "函館駅", "新函館北斗駅", "MIRAI BASE"),
+  lng = c(140.72881, 140.7277, 140.648376, 140.757159),
+  lat = c(41.768793, 41.773269, 41.904698, 41.814461)
+)
+
+# 函館駅と新函館駅を結ぶ
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = map_df$lng[2:3], lat = map_df$lat[2:3], popup = map_df$popup[2:3]) %>% 
+  addPolylines(lng = map_df$lng[2:3], lat = map_df$lat[2:3])
+```
+
+## Leaflet Route Machine
+
+* 経路探索用のleafletプラグイン
+* まだ`leaflet`には用意されてない。
+* `rMaps`を使う。
+    * `rCharts`が依存関係
+
+```bash
+R --no-save << EOF > install_rCharts.log 2>&1
+devtools::install_github("rmnathv/rCharts")
+\EOF
+```
+
+```bash
+R --no-save << EOF > install_rMaps.log 2>&1
+devtools::install_github("rmnathv/rMaps")
+\EOF
+```
+
+---
+
+* 絶賛失敗中です。
+* jsコード読んでないのでどこが悪いかわからない。
+* そのうち完成させます。
+
+```{r route_search,eval=FALSE}
+library(rMaps); library(leaflet)
+map <- Leaflet$new()
+map$setView(c(map_df$lat[1], map_df$lng[1]), zoom = 15)
+#map$marker(c(map_df$lat[2], map_df$lng[2]), bindpopup = map_df$popup[2])
+#map$marker(c(map_df$lat[4], map_df$lng[4]), bindpopup = map_df$popup[4])
+map$addAssets(css = c("https://unpkg.com/leaflet@1.2.0/dist/leaflet.css", "https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"),
+              jshead = c("https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js", "https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"))
+map$setTemplate(afterScript = sprintf("
+<script>
+  L.Routing.control({
+    waypoints: [
+      L.latlng(41.77327, 140.7277),
+      L.latlng(41.81446, 140.7572)
+    ]
+}).addTo(map);
+</script>
+"))
+map
+```
+
+
+## libpng
+
+* `leaflet`のインストール時にエラーが出る場合がある。
+
+```
+/bin/sh: libpng-config: command not found
+read.c:3:17: 致命的エラー: png.h: No such file or directory
+ #include <png.h>
+
+ ERROR: compilation failed for package ‘png’
+```
+
+---
+
+* 一応、失敗例も
+* wget以下が成功例
+
+```bash
+# 失敗
+sudo yum install libpng-config
+
+# 失敗
+sudo yum install libpng.x86_64
+
+wget http://prdownloads.sourceforge.net/libpng/libpng-1.6.34.tar.gz
+tar zxvf libpng-1.6.34.tar.gz
+cd libpng-1.6.34
+./configure
+make
+sudo make install
+
+export CPLUS_INCLUDE_PATH=/usr/local/include
+export LD_LIBRARY_PATH=/usr/local/lib
+export LIBRARY_PATH=/usr/local/lib
+```
+
+---
+
+```bash
+R --no-save << EOF > install_png.log 2>&1
+install.packages("png")
+\EOF
+```
+
+```bash
+R --no-save << EOF > install_leaflet.log 2>&1
+install.packages("leaflet")
+\EOF
+```
+
+
+# 19.DiagrammeR
+
+## DiagrammeRとは
+
+* `graphviz`と`mermaid`が主力
+* パイプを使った図の生成も可能
+* DOT言語をベースにしている記述方法
+    * 方言がある
+
+## graphviz
+
+### grViz関数
+
+```{r test_grViz, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+grViz("
+digraph prac_grviz {
+      //グラフ全体の設定
+      graph [ rankdir = LR ]
+
+      //ノードの設定
+      node []
+      a; b; c;
+
+      //エッジの設定
+      edge []
+
+      a -> b -> c
+     
+}
+      ")
+```
+
+---
+
+* コメントアウトは`//`, `/* */`, `#` が使える。
+* `digraph グラフ名 { グラフの情報 }`で書く
+* ダウンストリーム的に上から下に順ぐりに書く
+* `->`で有向, `--`で無向
+
+---
+
+```{r test_grViz_2, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+grViz("
+      digraph gogyo {
+      
+      graph [ charset = 'UTF-8' ]
+      
+      node [ shape = 'circle']
+      a [ label = '木' ];
+      b [ label = '火' ];
+      c [ label = '土' ];
+      d [ label = '金' ];
+      e [ label = '水' ];
+      
+      edge []
+      a -> b -> c -> d -> e [ arrowhead = 'none' ]
+      a -> c -> e -> b -> d -> a
+
+      }
+      ")
+
+```
+
+
+---
+
+* `[label = 'なまえ']`で表示する名前を書きます。
+* `[shape = 'circle']`でノードの形を設定します。
+* `[arrowtail = 'none', arrowhead = 'none']`でエッジの設定をします。
+
+* 五行を書いてみたのですが、全然綺麗じゃないですね。
+
+---
+
+```{r test_grViz_2_2, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+grViz("
+      digraph gogyo_resetting {
+      
+      graph [ charset = 'UTF-8',
+              rankdir = TB,
+              // layout = dot
+              // layout = neato
+              // layout = twopi
+              layout = circo
+            ]
+      
+      node [ shape = 'circle',
+             width = 0.9 ]
+      a [ label = '木' ];
+      b [ label = '火' ];
+      c [ label = '土' ];
+      d [ label = '金' ];
+      e [ label = '水' ];
+      
+      edge []
+      a -> b -> c -> d -> e [ arrowhead = 'none' ]
+      a -> c -> e -> b -> d -> a
+
+      
+      {rank = min; a;}
+      {rank = same; b; e;}
+      {rank = max; c; d;}
+
+      }
+      ")
+
+```
+
+---
+
+* とても惜しい感じになってますね。
+* こんな感じでグラフが自動生成されてしまうため。
+* 調整がかなり難しい。
+
+
+## footnumber
+
+```{r test_grViz_3, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+grViz("
+      digraph c_pointer {
+      
+      graph [
+      charset = 'UTF8',
+      rankdir = LR,
+      newrank = true,
+      compound = true
+      ]
+      
+      node [
+      shape = 'box'
+      ]
+      
+      subgraph cluster_a {
+      
+      label = '003'
+      
+      /*
+      // 003
+      003 [ label = '@@1-1' ]
+      */
+      // a
+      a [ label = '@@1-1' ]
+      }
+
+      // *a
+      pointer_pointer [ label = '@@1-2' ]
+      // **a
+      base_pointer_pointer [ label = '@@1-3' ]
+      
+      subgraph cluster_b {
+      
+      label = '002'
+      
+      /*
+      // 002
+      002 [ label = '@@2-1' ]
+      */
+      // b
+      b [ label = '@@2-1' ]
+      
+      }
+      
+      // *b
+      base_pointer         [ label = '@@2-2'      ]
+
+      subgraph cluster_c {
+      
+      label = '001'
+      
+      /*
+      // 001
+      001 [ label = '@@3-1' ]
+      */
+      // c\\n114
+      c [ label = '@@3-1' ]
+      //      base            [ label = '114'           ]
+      
+      }
+      
+      
+      
+      a -> b [ lhead = cluster_b, color = red ];
+      b -> c [ lhead = cluster_c,arrowtail = diamond, color = red]
+
+      pointer_pointer -> b
+      base_pointer_pointer -> c
+
+      base_pointer -> c
+      
+      {rank = same; a; pointer_pointer; base_pointer_pointer;}
+      {rank = same; b; base_pointer;}
+      {rank = same; c;}
+      
+      }
+      
+      [1]: c( 'a\\n002', '*a\\n001', '**a\\n114')
+      [2]: c( 'b\\n001', '*b\\n114')
+      [3]: c( 'c\\n114')
+      ")
+ 
+```
+
+---
+
+* `@@`の後に数字をつける
+* `@@1-1`みたいにすると複数のfootnumberをつけれる
+* `[footnumber]: `で属性を設定できる
+* `graph graph_name {}`の外はRの表現を使える
+* Rの表現式でのエスケープとhtmlにわたす改行文字の表現で`\\n`となる
+
+
+## mermaid
+
+* `mermaid`というグラフ生成方法もある
+* 記述が簡単
+* 優秀
+* 通常のフローチャート
+* シーケンスダイアグラム
+* ガントチャート
+* マジで優秀
+* なんどでもいう、優秀
+
+---
+
+
+```{r  ,fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+mermaid("
+graph LR
+    id1[四角]
+    id2(角丸)
+    id3{ダイヤ}
+    id4>よこっちょ削り]
+    id5((円))
+id1 --- id2
+id2 --> id3
+id3 ---|こっち| id4
+id3 --円だよ--> id5
+")
+```
+
+---
+
+
+* すっきりした書き心地
+* 上から順番に書いていく
+* `graph`は通常のグラフ
+    * `LR`, `RL`, `TB`(`TD`), `BT`で全体の方向を指定
+* 表示する文字は直接書いてOK！
+* ただし、文字列を明示するには`""`でくくる
+    * シングルクウォーテーションは効かない
+* そのため、`mermaid('グラフ')`で全体をくくる
+    
+---
+
+* 矢印はいっぱいある
+    * 規則性があるのでわかりやすい
+    
+|無向|有向|効果|
+|:---:|:-----:|:-----:|
+|`---`|`-->`|ふつう|
+|`-.-`|`-.->`|ドット|
+|`===`|`==>`|太い|
+|`---|hoge|`|`-->|hoge|`|テキストつき|
+|`-- hoge ---`|`-- hoge -->`|テキストつき|
+|`-.->|hoge|`|`-. hoge .->`|テキストつきドット|
+
+## sequenceDiagram
+
+* ダイアグラムも簡単に作れる
+
+```{r shinkansen, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+mermaid("
+sequenceDiagram
+  participant aomori as 新青森
+  participant kikonai as 木古内
+  participant hokuto as 新函館北斗
+  participant hakodate as 函館
+
+aomori->>kikonai: 新幹線
+kikonai->>hokuto: 新幹線
+hokuto--xhakodate: 新幹線
+hokuto->>hakodate: JR
+
+Note over aomori,kikonai: 青函トンネル
+")
+```
+
+---
+
+* `sequenceDiagram`を書く
+* `participant 名前`で各シーケンスの名前を設定
+    * `participant id as 名前`でid名で扱えるようになる。(エイリアス)
+* `エッジ: テキスト`でテキストを入れられる
+* `Note 配置 Actor: テキスト`でメモを入れられる。
+    * `left of`, `right of`, `over`
+    * Actor(ノード)を2つ設定するとまたいでNoteを入れられる。
+
+---
+
+* 矢印はflowchartとはまた違う。
+* 例のごとくいっぱいある
+
+|無向|有向|ばってん|効果|
+|:-----:|:-------:|:----:|:--------:|
+|`->`|`->>`|`-x`|ふつう|
+|`-->`|`-->>`|`--x`|点線|
+
+## Gant diagram
+
+* ガントチャートのこと
+
+```{r feshiken, fig.width=6, fig.asp=0.618, out.width="70%", fig.align="center"}
+mermaid("
+        gantt
+            title 基本情報
+            dateFormat YYYY-MM-DD
+            section 午前問題
+            テキスト読み込み    :done, text, 2017-12-01, 30d
+            午前の過去問              :done, kako_1, after text, 90d
+
+            section 午後問題
+            C言語               :done, Clang, 2018-02-01, 60d
+            午後の過去問        :done, kako_2, 2018-02-01, 60d
+
+            section 試験日程
+            fe                  :crit, done, test, 2018-04-15, 1d
+            合格発表            :      done, pass, 2018-05-16, 1d
+
+            section 合格発表後
+            IEEEEEEEEEEE        :active, IEEE, 2018-05-16, 10d
+        ")
+
+```
+
+## パイプライン {#pipe_diagrammer}
+
+* DiagrammeRのバージョンアップで最新版とCRAN版と関数群が変更になっているようです。
+* バージョン1.0で実行してみてください。
+* 今回は`?render_graph`を参考にしています。
+
+```{r pipe_render_graph_1}
+create_graph() %>%
+  # 均等なツリーをつくる
+  add_balanced_tree(
+    # kは分岐の数, hは深度
+    k = 2, h = 3) %>%
+  render_graph()
+```
+
+---
+
+```{r pipe_render_graph_2}
+create_graph() %>%
+  add_balanced_tree(
+    k = 2, h = 3) %>%
+  # layoutで構造をしていする
+  render_graph(layout =
+                 "nicely" #default
+                 #"tree" #ツリー
+                 #"circle" #円
+                 #"kk" #defaultのぎゅっとしたやつ
+                 #"fr" #defaultの点対称っぽい
+               )
+```
+
+---
+
+```{r pipe_render_graph_3}
+create_graph() %>%
+  add_balanced_tree(
+    k = 2, h = 3) %>%
+  # ノードのラベルを剥がす attr=NULL, nodes=NULL
+  set_node_attr_to_display() %>% 
+  render_graph(layout = "circle")
+```
+
+---
+
+```{r pipe_render_graph_4}
+create_graph() %>%
+  # graphのノード(n)とエッジ(m)を設定する
+  # 乱数でノードとエッジを決めているようなのでset_seedを設定する
+  add_gnm_graph(n = 60, m = 5
+                #, set_seed = 1
+                ) %>% 
+  render_graph(layout = "circle")
+```
+
+---
+
+```{r pipe_render_graph_5}
+create_graph() %>%
+  add_balanced_tree(
+    k = 2, h = 3) %>%
+  # output = NULLでgrVizを利用してレンダリングされる
+  # output = "visNetwork"でvisnetworkを利用してレンダリングされる
+  render_graph(output = "visNetwork")
+```
+
+---
+
+### 公式
+
+* ここからは公式ドキュメントをベースに
+* コードを修正していきます。
+* 公式のドキュメントが更新されるのを待ちたい。
+
+
+```{r traversal_1}
+#乱数使われているみたい
+graph <-
+  create_graph() %>%
+  add_n_nodes(
+    n = 1,
+    type = "a"
+  ) %>% 
+  add_n_nodes(
+    n = 4,
+    type = "b"
+  ) %>% 
+  add_n_nodes(
+    n = 4,
+    type = "c"
+  ) %>% 
+  add_edges_w_string(
+    edges = "1->2 1->3 4->1 5->1 1->6 1->7 8->1 9->1"
+  )
+# View the created graph
+render_graph(graph, output = "visNetwork")
+```
+
+---
+
+```{r traversal_2_update}
+update_graph <-  graph %>%
+  select_nodes_by_id(nodes = 1) %>%
+  trav_out(conditions = type == "c") %>%
+  add_n_nodes_ws(1, direction = "from", type = "d")
+render_graph(update_graph, output = "visNetwork")
+```
+
+---
+
+```{r traversal_3}
+nodes <-
+  create_node_df(
+    n = 9,
+    type = c("fruit", "fruit", "fruit",
+             "veg", "veg", "veg",
+             "nut", "nut", "nut"),
+    label = c("pineapple", "apple",
+              "apricot", "cucumber",
+              "celery", "endive",
+              "hazelnut", "almond",
+              "chestnut"))
+
+edges <-
+  create_edge_df(
+    from = c(9, 3, 6, 2, 6, 2, 8, 2, 5, 5),
+    to = c(1, 1, 4, 3, 7, 8, 1, 5, 3, 6))
+
+graph <-
+  create_graph(
+    nodes_df = nodes,
+    edges_df = edges)
+
+render_graph(graph, output = "visNetwork")
+```
+
+---
+
+```{r traversal_4_random_graph}
+random_graph <-
+  create_graph(directed = TRUE) %>% 
+  add_gnm_graph(n = 5, m = 10, set_seed = 20) %>% 
+  set_node_attrs(node_attr = "value", values = c(9, 8, 3, 5.5, 10))
+random_graph %>% get_node_df()
+random_graph %>% get_edge_df()
+render_graph(random_graph, output = "visNetwork")
+```
+
+---
+
+```{r traversal_5}
+nodes <-
+  create_node_df(
+    n = 14,
+    type = c("person", "person",
+             "person", "person",
+             "person", "fruit",
+             "fruit", "fruit",
+             "veg", "veg", "veg",
+             "nut", "nut", "nut"),
+    label = c("Annie", "Donna",
+              "Justine", "Ed",
+              "Graham", "pineapple",
+              "apple", "apricot",
+              "cucumber", "celery",
+              "endive", "hazelnut",
+              "almond", "chestnut"))
+
+edges <-
+  create_edge_df(
+    from = sort(
+      as.vector(replicate(5, 1:5))),
+    to = as.vector(
+      replicate(5, sample(6:14, 5))),
+    rel = as.vector(
+      replicate(
+        5, sample(
+          c("likes", "dislikes",
+            "allergic_to"), 5,
+          TRUE,
+          c(0.5, 0.25, 0.25)))))
+
+graph <-
+  create_graph(
+    nodes_df = nodes,
+    edges_df = edges
+    )
+
+graph %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r traversal_6,eval=F}
+set.seed(20)
+
+graph <-
+  create_graph(directed = TRUE) %>% 
+  add_gnm_graph(10, 20,
+                set_seed = 20)
+  graph <-
+    graph %>% 
+   # select_nodes_by_id(i) %>% 
+    set_node_attrs(
+      node_attr = "type",
+      values = sample(
+        c("a", "b", "c"), count_nodes(graph), replace = TRUE))
+
+  graph <-
+    graph %>% 
+    set_edge_attrs(
+      from = get_edges(., return_type = "df")[i, 1],
+      to = get_edges(., return_type = "df")[i, 2],
+      edge_attr = "data_value",
+      values = sample(
+        seq(0, 8, 0.5), count_edges(graph), replace = TRUE))
+
+# Look at the graph
+graph %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r traversal_7}
+set.seed(20)
+
+# Create a graph with fruit,
+# vegetables, nuts, and... people!
+nodes <-
+  create_node_df(
+    n = 14,
+    type = c("person", "person",
+             "person", "person",
+             "person", "fruit",
+             "fruit", "fruit",
+             "veg", "veg", "veg",
+             "nut", "nut", "nut"),
+    label = c("Annie", "Donna",
+              "Justine", "Ed",
+              "Graham", "pineapple",
+              "apple", "apricot",
+              "cucumber", "celery",
+              "endive", "hazelnut",
+              "almond", "chestnut"))
+
+edges <-
+  create_edge_df(
+    from = sort(
+      as.vector(replicate(5, 1:5))),
+    to = as.vector(
+      replicate(5, sample(6:14, 5))),
+    rel = as.vector(
+      replicate(
+        5, sample(
+          c("likes", "dislikes",
+            "allergic_to"), 5,
+          TRUE,
+          c(0.5, 0.25, 0.25)))))
+
+graph <-
+  create_graph(
+    nodes_df = nodes,
+    edges_df = edges
+    )
+
+# Have a look at the graph
+graph %>% render_graph(output = "visNetwork")
+
+```
+
+---
+
+```{r traversal_8}
+graph_allergies <-
+  graph %>%
+  select_nodes(
+    conditions  = type == "person") %>%
+  invert_selection() %>%
+  trav_in_edge(
+    conditions  = rel == "allergic_to") %>%
+  trav_in_node() %>%
+  set_node_attrs_ws(node_attr = "color", value = "red") %>%
+  invert_selection() %>%
+  set_node_attrs_ws(node_attr = "color", value = "green") %>%
+  clear_selection() %>%
+  select_nodes(
+    conditions =  type == "person") %>%
+  set_node_attrs_ws(node_attr = "color", value = "blue")
+graph %>% get_edge_df
+
+# Display the modified graph, where green
+# nodes represent safe foods for the
+# group of people (blue nodes); red nodes
+# are the danger foods
+graph_allergies %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r software_repository_1}
+contributors_csv <-
+  system.file("extdata", "contributors.csv",
+              package = "DiagrammeR")
+
+colnames(read.csv(contributors_csv,
+                  stringsAsFactors = FALSE))
+
+# Create a path to the CSV file containing
+# information about the software projects
+projects_csv <-
+  system.file("extdata/projects.csv",
+              package = "DiagrammeR")
+
+colnames(read.csv(projects_csv,
+                  stringsAsFactors = FALSE))
+
+# Create a path to the CSV file with information
+# about the relationships between the projects
+# and their contributors
+projects_and_contributors_csv <-
+  system.file("extdata/projects_and_contributors.csv",
+              package = "DiagrammeR")
+
+colnames(read.csv(projects_and_contributors_csv,
+                  stringsAsFactors = FALSE))
+
+# Create the property graph by adding the CSV data to a
+# new graph; the `add_nodes_from_csv()` and
+# `add_edges_from_csv()` functions are used to create
+# nodes and edges in the graph
+graph <-
+  create_graph() %>%
+  set_graph_name("software_projects") %>%
+  add_nodes_from_table(
+    contributors_csv,
+    set_type = person,
+    label_col = name) %>%
+  add_nodes_from_table(
+    projects_csv,
+    set_type = project,
+    label_col = project) %>%
+  add_edges_from_table(
+    projects_and_contributors_csv,
+    from_col = contributor_name,
+    #from_mapping = "name",
+    to_col = project_name,
+    from_to_map = label,
+    rel_col = contributor_role)
+
+get_node_df(graph)
+
+# View the graph
+graph %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r software_repository_2}
+graph_scale_width_edges <-
+  graph %>%
+  select_edges() %>%
+  rescale_edge_attrs(
+    edge_attr_from = "commits", edge_attr_to = "width",
+    to_lower_bound = 0.5, to_upper_bound = 3.0)
+
+# Inspect the graph's internal EDF
+get_edge_df(graph_scale_width_edges)
+
+# View the graph, larger edges and arrows
+# indicate higher numbers of `commits`
+graph_scale_width_edges %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r software_repository_3}
+graph_scale_color_edges <-
+  graph %>%
+  select_edges() %>%
+  rescale_edge_attrs(
+    edge_attr_from = "commits", edge_attr_to ="color",
+    to_lower_bound = "gray95", to_upper_bound =  "gray5")
+
+# Render the graph, darker edges represent higher
+# commits
+graph_scale_color_edges %>% render_graph(output = "visNetwork")
+```
+
+---
+
+```{r software_repository_4}
+graph <-
+  graph %>% 
+  add_edge(
+    get_node_ids(.,
+      conditions = label == "Kim"),
+    get_node_ids(.,
+      conditions = label == "stringbuildeR"),
+    "contributor") %>%
+  select_last_edges_created() %>%
+  set_edge_attrs_ws("commits", 15) %>%
+  clear_selection()
+
+# View the graph's internal EDF, the newest
+# edge is at the bottom
+get_edge_df(graph)
+
+
+# View the graph to see the new edge
+graph %>% render_graph(output = "visNetwork")
+```
+
+---
+
+* まだまだありますが、ここでやめておきます。
+* CRANからインストールした場合、バージョンはstableになるので修正版は使えない
+
+
+# 20.動的処理
+
+## 小手調べ
+
+* 通常、Rではメモリを先に確保する
+    * 静的なうごきのほうが速い、軽い
+* でも文字列をオブジェクトにすることがある
+    * 動的なうごきは遅い、重い
+    * どれだけのメモリを確保すればいいかわからない
+* Rは動的型付けの関数型言語
+    * 関数型と手続き型の中間型かな
+
+## 関数型
+
+* `function(fun) fun()`って感じのやつ
+* ほかにもラムダとか使えるらしい
+* 詳しくはhaskell, F#に任せたい。
+* `lambdaR`パッケージもある。
+
+```{r function_type}
+testa <- function() print("a")
+
+testfun <- function(fun) {fun(); print(environment())}
+replicate(3, testfun(testa))
+```
+
+## 匿名関数
+
+* 名前のない関数
+* `fun = function(){}`とかのやつ
+* `apply`ファミリー, `prrr::map*`, `stat_function`とかで使う
+* 直接は関係ないけど、`()`でくくると代入式でもリターンしてくれる
+
+```{r func_unknown}
+(test_unknown <- "Hello")
+(function(var, n) {
+  tmp <- var
+  for(i in 1:n) {
+  var <- (var + tmp/var) / 2
+  }
+  return(var)})(2, 10)
+```
+
+
+
+
+## eval, substitute, do.call
+
+* いよいよ動的処理
+* 今は、`eval`と`substitute`と`do.call`を使うのが主流らしい
+* `eval`と`parse`では遅いらしい
+
+```{r test_eval}
+microbenchmark::microbenchmark(
+  esd = function() eval(substitute(do.call(func, args = list(n = 30)), env = list(func = "rnorm"))),
+   ep  = function() eval(parse(text = paste0("rnorm", "(", "n" ,")")), envir = list(n = 30)),
+   times = 20
+ )
+```
+
+* meanを見るとesdのほうが速いですね
+
+
+
+# 他言語２
+
+## 組み合わせ
 
 # さいごに
 
@@ -1039,14 +2544,25 @@ ToothGrowth2 %>%
 
 # 付録
 
-## ToothGrowth
+# 環境構築
 
-```{r ToothGrowth_kable}
-ToothGrowth %>% knitr::kable()
-```
+## virtualbox
 
+## vagrant
+
+### rstudio-server
+
+## Vagrantfile
+
+## Nginx
+
+## Shiny-server
 
 ## 参考資料
 
 * [アート・オブ・Rプログラミング](https://www.oreilly.co.jp/books/9784873115795/)
 * [R for Data Science](http://r4ds.had.co.nz/)
+* [DiagrammeR](http://rich-iannone.github.io/DiagrammeR/docs.html)
+* [mermaid.js](https://mermaidjs.github.io/)
+
+

@@ -1,0 +1,198 @@
+
+grViz("
+      digraph c_pointer {
+      
+      graph [
+          charset = 'UTF8',
+          rankdir = LR
+      ]
+      
+      node [
+          shape = 'box'
+      ]
+      
+      003;
+      a [ label = 'a' ]
+      002;
+      b [ label = 'b' ]
+      001;
+      c [ label = 'c\n114' ]
+      pointer_pointer [ label = '*a' ]
+      base_pointer_pointer [ label = '**a' ]
+      base_pointer         [ label = '*b'      ]
+//      base            [ label = '114'           ]
+
+      subgraph cluster_a {
+        003; a; pointer_pointer; base_pointer_pointer;
+      }
+      
+      
+      003 -> 002 -> 001 [ arrowtail = none, arrowhead = none, style = dashed]
+      a -> 002
+      b -> 001 [ arrowtail = diamond]
+      pointer_pointer -> b
+      base_pointer_pointer -> c
+
+      base_pointer -> c
+
+      {rank = same; 003; a; pointer_pointer; base_pointer_pointer;}
+      {rank = same; 002; b; base_pointer;}
+      {rank = same; 001; c;}
+
+      }
+      ")
+
+
+grViz("
+      digraph c_pointer {
+      
+      graph [
+      charset = 'UTF8',
+      rankdir = LR,
+      newrank = true
+      ]
+      
+      node [
+      shape = 'box'
+      ]
+      
+      subgraph cluster_a {
+
+        label = '003'
+        // 003
+        003 [ label = '@@1-1' ]
+        // a
+        a [ label = '@@1-2' ]
+        // *a
+        pointer_pointer [ label = '@@1-3' ]
+        // **a
+        base_pointer_pointer [ label = '@@1-4' ]
+      }
+
+      subgraph cluster_b {
+
+        label = '002'
+        // 002
+        002 [ label = '@@2-1' ]
+        // b
+        b [ label = '@@2-2' ]
+        // *b
+        base_pointer         [ label = '@@2-3'      ]
+
+      }
+
+      subgraph cluster_c {
+
+        label = '001'
+        // 001
+        001 [ label = '@@3-2' ]
+        // c\n114
+        c [ label = '@@3-2' ]
+        //      base            [ label = '114'           ]
+
+      }
+
+      
+      
+      003 -> 002 -> 001 [ arrowtail = none, arrowhead = none, style = dashed]
+      a -> 002
+      b -> 001 [ arrowtail = diamond]
+      pointer_pointer -> b
+      base_pointer_pointer -> c
+      
+      base_pointer -> c
+      
+      {rank = same; 003; a; pointer_pointer; base_pointer_pointer;}
+      {rank = same; 002; b; base_pointer;}
+      {rank = same; 114; 001; c;}
+      
+      }
+
+      [1]: c('003', 'a', '*a', '**a')
+      [2]: c('002', 'b', '*b')
+      [3]: c('001', 'c')
+      ")
+
+
+grViz("
+      digraph c_pointer {
+      
+      graph [
+      charset = 'UTF8',
+      rankdir = LR,
+      newrank = true,
+      compound = true
+      ]
+      
+      node [
+      shape = 'box'
+      ]
+      
+      subgraph cluster_a {
+      
+      label = '003'
+      
+      /*
+      // 003
+      003 [ label = '@@1-1' ]
+      */
+      // a
+      a [ label = '@@1-1' ]
+      }
+
+      // *a
+      pointer_pointer [ label = '@@1-2' ]
+      // **a
+      base_pointer_pointer [ label = '@@1-3' ]
+      
+      subgraph cluster_b {
+      
+      label = '002'
+      
+      /*
+      // 002
+      002 [ label = '@@2-1' ]
+      */
+      // b
+      b [ label = '@@2-1' ]
+      
+      }
+      
+      // *b
+      base_pointer         [ label = '@@2-2'      ]
+
+      subgraph cluster_c {
+      
+      label = '001'
+      
+      /*
+      // 001
+      001 [ label = '@@3-1' ]
+      */
+      // c\\n114
+      c [ label = '@@3-1' ]
+      //      base            [ label = '114'           ]
+      
+      }
+      
+      
+      
+      a -> b [ lhead = cluster_b, color = red ];
+      b -> c [ lhead = cluster_c,arrowtail = diamond, color = red]
+
+      pointer_pointer -> b
+      base_pointer_pointer -> c
+
+      base_pointer -> c
+      
+      {rank = same; a; pointer_pointer; base_pointer_pointer;}
+      {rank = same; b; base_pointer;}
+      {rank = same; c;}
+      
+      }
+      
+      [1]: c( 'a\\n002', '*a\\n001', '**a\\n114')
+      [2]: c( 'b\\n001', '*b\\n114')
+      [3]: c( 'c\\n114')
+      ")
+ 

@@ -1,0 +1,57 @@
+#server
+
+#------------------------関数の読み込み------------------------------
+source("VCM_TDM_setup_functions.R")
+
+shinyServer(function(input, output){
+  
+  #-----------------------list型でデータの整形-----------
+  data <- reactive({
+    list(
+    Country = input$Jap,
+    Height = input$Height,
+    Weight = input$Weight,
+    Cr = input$Cr,
+    Cysc = input$CysC,
+    tau = input$tau,
+    Ko = input$Ko,
+    fun = input$Fun
+  )
+  })
+  
+  arguments <- reactive({
+    switch(input$Fun,
+            "eGFR" = list(input$Cr, input$Age, input$Sex),
+            "eGFR_cys" = list(input$CysC, input$Age, input$Sex),
+            "eGFR_ckdepi" = list(input$Cr, input$Age, input$Sex),
+            "CockcroftGault" = list(input$Cr, input$Weight, input$Age, input$Sex))
+  })
+  
+  #-----------------------BSAの算出----------------------
+  BSA <- reactive({
+    input$Weight ^ 0.425 * input$Height ^ 0.725 * 0.007184
+  })
+  
+  #-----------------------CCrの算出---------------------- 
+  CCr <- reactive({
+    eval(
+      do.call(input$Fun,
+              arguments)
+    )
+  })
+  
+  reactive({ ifelse(input$Fun == "CockcroftGault", NA, CCr <- CCr * BSA / 1.73) })
+  
+  #-----------------------Vdの算出-----------------------
+  Vd <- reactive({
+    weight_sex$Vd_sex[input$Sex] * input$Weight
+  })
+  
+  #-----------------------kel,thalfの算出----------------
+  kel <- reactive({ CCr / Vd })
+  thalf <- reactive({ log2 / kel })
+  
+  #-----------------------Coの算出----------------------
+
+  output$test_print <- renderDataTable(reactive({as.data.frame(list(CCr, kel, thalf))}))
+})

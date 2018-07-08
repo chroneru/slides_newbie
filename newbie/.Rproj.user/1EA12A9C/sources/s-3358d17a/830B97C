@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1530953239048.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "830B97C",
+    "lastKnownWriteTime" : 1528620525,
+    "last_content_update" : 1528620525,
+    "path" : "~/share/VCM_TDM/test_eval.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "0,0",
+        "marks" : "<:1,0\n>:2,-1",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
