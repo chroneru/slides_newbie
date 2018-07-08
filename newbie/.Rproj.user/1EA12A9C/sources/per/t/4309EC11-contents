@@ -66,6 +66,11 @@
   font-size: 80%;
 }
 
+.reveal pre {
+  font-size: 80%;
+  overflow: auto;
+}
+
 /* ul's setting */
 
 .reveal ul,

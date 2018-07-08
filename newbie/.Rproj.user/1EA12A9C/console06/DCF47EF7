@@ -141,4 +141,4 @@ newbie_workshop_image/   poster_background_image/
 ]0;~/share/newbie/Image/newbie_workshop_image[vagrant@localhost newbie_workshop_image]$ ls
 [0m[38;5;13mbayes_and_lm_plot.png[0m       [38;5;13mmtcars_tibble.png[0m  [38;5;13mToothGrowth_lm_result_plot_2.png[0m
 [38;5;13mguinea-pig-242520_1920.jpg[0m  [38;5;13mpareto_graph.png[0m   [38;5;13mToothGrowth_lm_result_plot.png[0m
-]0;~/share/newbie/Image/newbie_workshop_image[vagrant@localhost newbie_workshop_image]$ 
+[K[vagrant@localhost newbie]$ 

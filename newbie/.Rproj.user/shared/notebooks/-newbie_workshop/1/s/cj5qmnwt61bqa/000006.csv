@@ -1,0 +1,11 @@
+"0","(function(var, n) {
+  tmp <- var
+  for(i in 1:n) {
+  var <- (var + tmp/var) / 2
+  }
+  return(var)})(2, 10)
+"
+"1","[1]"
+"1"," 1.414214"
+"1","
+"
