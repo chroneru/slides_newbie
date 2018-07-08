@@ -1,0 +1,63 @@
+testa <- function() print("a")
+testa_obj <- "testa"
+
+testfun <- function(fun) {fun(); print(environment())}
+testfun(testa)
+
+# do.callを使うには，リスト型にしておく必要がある
+
+testa_obj <- list(func = "testa")
+
+do.call("testfun", list(testa))
+do.call("testfun", args = list(testa))
+do.call(testfun, list(testa))
+#これだとうごかない
+do.call(testfun, list(("testa")))
+  #これと同じ動きになる
+testfun("testa")
+
+eval(
+  substitute(
+    do.call("testfun", args = list(parse(text = func))),
+    testa_obj
+  )
+  #substituteの結果は
+  # do.call("testfun", args = list("testa"))
+  
+  , envir = .GlobalEnv
+)
+
+################結果#################
+# funを使った関数型プログラミングは #
+# 文字列評価を逃れないため用いない  #
+# 素直に動的評価を使う              #
+#####################################
+
+
+args <- list(
+  data = "x",
+  fun1 = "mean",
+  fun2 = "rnorm",
+  arg1 = "2"
+)
+
+#eval(
+  substitute(
+    data <- do.call(
+      fun1,
+      list(
+        x = do.call(
+          fun2,
+          list(n = arg1)
+          )
+        )
+      ),
+    args
+  )#, 
+  envir = .GlobalEnv
+#)
+print(x)
+
+A <- 2
+f <- function(x) print(x^2)
+do.call("f", list(A))
